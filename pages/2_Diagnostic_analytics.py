@@ -18,7 +18,7 @@ df_binary['Duration_Label'] = df_binary['Duration_Label'].map({'LT7': 0, 'GE7': 
 df_binary['AgeGroup']=df_binary['AgeGroup'].map(age_group_mapping)
 df_binary['TYPE OF ADMISSION-EMERGENCY/OPD'] = df_binary['TYPE OF ADMISSION-EMERGENCY/OPD'].map({'E': 0, 'O': 1})
 
-df_continue = df[['Duration_Label','boolGender','boolRural', 'AGE', 'Haemoglobin', 'TOTAL LEUKOCYTES COUNT', 'PLATELETS', 'GLUCOSE', 'UREA', 'CREATININE', 'B-TYPE NATRIURETIC PEPTIDE', 'Ejection Fraction','AgeGroup']]
+df_continue = df[['Duration_Label','boolGender','boolRural', 'AGE', 'Haemoglobin', 'TOTAL LEUKOCYTES COUNT', 'PLATELETS', 'GLUCOSE', 'UREA', 'CREATININE', 'B-TYPE NATRIURETIC PEPTIDE', 'Ejection Fraction','AgeGroup','ICU_admission_status']]
 df_continue.dropna(axis=0, inplace=True)
 df_continue['AgeGroup']=df_continue['AgeGroup'].map(age_group_mapping)
 df_continue['Duration_Label'] = df_continue['Duration_Label'].map({'LT7': 0, 'GE7': 1})
@@ -196,7 +196,7 @@ st.sidebar.image("./assets/P R A I S.png",)
 
 st.header("Risk factors")
 
-labs = ["The odd of staying in hosptial longer than 7 days"]
+labs = ["The odd of staying in hosptial longer than 7 days", "The odd of getting admitted to ICU"]
 
 option = st.selectbox(
     "Which target variables do you want to include?",
@@ -211,6 +211,8 @@ subpopulation = st.selectbox(
 
 if option == "The odd of staying in hosptial longer than 7 days":
     para1 = 'Duration_Label'
+elif option == "The odd of getting admitted to ICU":
+    para1 = 'ICU_admission_status'
 
 if subpopulation == "Location":
     para2 = 'boolRural'
@@ -218,6 +220,7 @@ elif subpopulation == "Gender":
     para2 = 'boolGender'
 elif subpopulation == "Age group":
     para2 = 'AgeGroup'
+
 
 binary_results = logistic_regression_analysis(df_binary, para2, para1)
 continue_results = logistic_regression_analysis(df_continue, para2, para1)
@@ -227,26 +230,30 @@ risk_table = create_risk_table(processed_result)
 
 if subpopulation == "Location":
     risk_table.rename(columns={
-    'group_0_odds_ratio': 'urban_odds_ratio',
-    'group_1_odds_ratio': 'rural_odds_ratio'
+    'group_0_odds_ratio': 'urban group odds ratio',
+    'group_1_odds_ratio': 'rural group odds ratio'
 }, inplace=True)
     
 elif subpopulation == "Gender":
     risk_table.rename(columns={
-    'group_0_odds_ratio': 'female_odds_ratio',
-    'group_1_odds_ratio': 'male_odds_ratio'
+    'group_0_odds_ratio': 'female group odds ratio',
+    'group_1_odds_ratio': 'male group odds ratio'
 }, inplace=True)
     
 elif subpopulation == "Age group":
     risk_table.rename(columns={
-    'group_1_odds_ratio': '<18_odd_ratio',
-    'group_2_odds_ratio': '18-35_odds_ratio',
-    'group_3_odds_ratio': '36-65_odds_ratio',
-    'group_4_odds_ratio': '>65_odds_ratio',
+    'group_1_odds_ratio': '<18 age group odd ratio',
+    'group_2_odds_ratio': '18-35 age group odds ratio',
+    'group_3_odds_ratio': '36-65 age group odds ratio',
+    'group_4_odds_ratio': '>65 age group odds ratio',
 }, inplace=True)
-    
-st.dataframe(risk_table)
+variables_to_remove = ["AgeGroup", "boolRural", "boolGender", "ICU_admission_status",'const']
+risk_table.drop(labels=variables_to_remove, errors='ignore', inplace=True)
+risk_table.fillna(0, inplace=True)
 
+st.bar_chart(risk_table, horizontal= True, stack=False)
+
+#st.dataframe(risk_table)
 
 
 
