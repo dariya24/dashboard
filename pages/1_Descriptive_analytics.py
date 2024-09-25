@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from dashboard_libraries import get_pvalue_propotion
+
 
 st.set_page_config(
     page_title="PRAIS - Descriptive",
@@ -24,19 +26,41 @@ with st.container():
     else:
         subset = df
 
-    a = subset.groupby("Duration_Label")["boolGender"].sum().reset_index()
-    b = subset.groupby("Duration_Label").SNO.count()
-    x = pd.merge(a, b, on="Duration_Label")
-    x["Perc"] = (x["boolGender"] / x['SNO']) * 100
+    # Group by 'Duration_Label' and 'GENDER' and count unique 'SNO'
+    grouped_df = subset.groupby(['Duration_Label', 'GENDER']).agg({'SNO': pd.Series.nunique}).reset_index()
 
-    st.table(data=x)
+    # Rename the column to 'Unique_Encuonters_Count'
+    grouped_df = grouped_df.rename(columns={'SNO': 'Unique_Encounters_Count'})
 
-    a = subset.groupby("Duration_Label")["boolRural"].sum().reset_index()
-    b = subset.groupby("Duration_Label").SNO.count()
-    x = pd.merge(a, b, on="Duration_Label")
-    x["Perc"] = (x["boolRural"] / x['SNO']) * 100
+    # Calculate total unique SNO for each Duration_Label
+    total_counts = subset.groupby('Duration_Label')['SNO'].nunique().reset_index().rename(
+        columns={'SNO': 'Total_Unique_Encounters'})
 
-    st.table(data=x)
+    # Merge with grouped data
+    merged_df = pd.merge(grouped_df, total_counts, on='Duration_Label')
+
+    # Calculate proportion of each gender within every Duration_Label
+    merged_df['Proportion'] = merged_df['Unique_Encounters_Count'] / merged_df['Total_Unique_Encounters']
+
+    st.table(data=merged_df.sort_values(by="Duration_Label", ascending=False))
+
+    # Group by 'Duration_Label' and 'GENDER' and count unique 'SNO'
+    grouped_df = subset.groupby(['Duration_Label', 'RURAL']).agg({'SNO': pd.Series.nunique}).reset_index()
+
+    # Rename the column to 'Unique_Encuonters_Count'
+    grouped_df = grouped_df.rename(columns={'SNO': 'Unique_Encounters_Count'})
+
+    # Calculate total unique SNO for each Duration_Label
+    total_counts = subset.groupby('Duration_Label')['SNO'].nunique().reset_index().rename(
+        columns={'SNO': 'Total_Unique_Encounters'})
+
+    # Merge with grouped data
+    merged_df = pd.merge(grouped_df, total_counts, on='Duration_Label')
+
+    # Calculate proportion of each gender within every Duration_Label
+    merged_df['Proportion'] = merged_df['Unique_Encounters_Count'] / merged_df['Total_Unique_Encounters']
+
+    st.table(data=merged_df.sort_values(by="Duration_Label", ascending=False))
 
     subset.pivot(columns='Duration_Label', values="AGE").plot.hist(alpha=0.5, title="AGE", bins=50)
 
@@ -102,10 +126,10 @@ total_number_encounters = df.SNO.nunique()
 mean_value = subset[option].mean()
 median_value = subset[option].median()
 
-st.write("Number of encounters: {}".format(number_encounters))
-st.write("Percentage of all encounters in the dataset: {}".format(number_encounters/total_number_encounters))
-st.write("Mean value: {}".format(mean_value))
-st.write("Median value: {}".format(median_value))
+st.write("Number of encounters: {0:.0f}".format(number_encounters))
+st.write("Percentage of all encounters in the dataset: {0:.2f}".format(100*number_encounters/total_number_encounters))
+st.write("Mean value: {0:.2f}".format(mean_value))
+st.write("Median value: {0:.2f}".format(median_value))
 
 
 
@@ -133,7 +157,23 @@ st.header("Comorbidities")
 
 with st.container():
 
-    conditions = ["SMOKING ","ALCOHOL","Diabetes Mellitus","Hypertension","Coronary Artery Disease","PRIOR CARDIOMYOPATHY","CHRONIC KIDNEY DISEASE"]
+    #conditions = ["boolGender", "boolRural", "SMOKING ","ALCOHOL","Diabetes Mellitus","Hypertension","Coronary Artery Disease","PRIOR CARDIOMYOPATHY","CHRONIC KIDNEY DISEASE"]
+
+
+    conditions = ["boolGender", "boolRural", "SMOKING ","ALCOHOL","Diabetes Mellitus","Hypertension","Coronary Artery Disease",
+                  "PRIOR CARDIOMYOPATHY","CHRONIC KIDNEY DISEASE",
+   'SEVERE ANAEMIA', 'ANAEMIA', 'STABLE ANGINA',
+       'Acute coronary Syndrome', 'ST ELEVATION MYOCARDIAL INFARCTION',
+       'ATYPICAL CHEST PAIN', 'HEART FAILURE',
+       'HEART FAILURE WITH REDUCED EJECTION FRACTION',
+       'HEART FAILURE WITH NORMAL EJECTION FRACTION', 'Valvular Heart Disease',
+       'Complete Heart Block', 'Sick sinus syndrome', 'ACUTE KIDNEY INJURY',
+       'Cerebrovascular Accident INFRACT', 'Cerebrovascular Accident BLEED',
+       'Atrial Fibrilation', 'Ventricular Tachycardia',
+       'PAROXYSMAL SUPRA VENTRICULAR TACHYCARDIA', 'Congenital Heart Disease',
+       'Urinary tract infection', 'NEURO CARDIOGENIC SYNCOPE', 'ORTHOSTATIC',
+       'INFECTIVE ENDOCARDITIS', 'Deep venous thrombosis', 'CARDIOGENIC SHOCK',
+       'SHOCK', 'PULMONARY EMBOLISM', 'CHEST INFECTION']
 
     option = st.selectbox(
         "Which comorbidity you want to review?",
@@ -146,21 +186,30 @@ with st.container():
     # st.pyplot(plt)
 
     if st.checkbox('Only ICU Admissions  '):
+        only_ICU1 = 1
         subset = df[df.ICU_admission_status == 1]
     else:
+        only_ICU1 = 0
         subset = df
+
 
     a = subset.groupby("Duration_Label")[option].sum().reset_index()
     b = subset.groupby("Duration_Label").SNO.count()
     x = pd.merge(a, b, on="Duration_Label")
     x["Perc"] = (x[option] / x['SNO']) * 100
 
-    st.table(data=x)
+    st.table(data=x.sort_values(by="Duration_Label", ascending=False))
+    text, color = get_pvalue_propotion(subset, option, "Duration_Label")
+    st.write(":{}[{}]".format(color, text))
 
     a = subset.groupby("ICU_admission_status")[option].sum().reset_index()
     b = subset.groupby("ICU_admission_status").SNO.count()
     x = pd.merge(a, b, on="ICU_admission_status")
     x["Perc"] = (x[option] / x['SNO']) * 100
-
     st.table(data=x)
+
+    # If only ICU, then we can not calculate percentage, therefore only do this line below if NOT ICU
+    if not only_ICU1:
+        text, color = get_pvalue_propotion(subset, option, "ICU_admission_status")
+        st.write(":{}[{}]".format(color, text))
 
