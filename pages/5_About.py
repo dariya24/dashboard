@@ -1,12 +1,4 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-
-#this sets page title and icon, non critical
-st.set_page_config(
-    page_title="Page 1 - PRAIS",
-    page_icon="❤️",
-)
 
 # Sidebar background with reduced opacity for image only
 sidebar_bg = '''
@@ -40,8 +32,30 @@ sidebar_bg = '''
 
 st.markdown(sidebar_bg, unsafe_allow_html=True)
 
-# Main content here
-st.markdown("<h1 style='color: red;'>PRAIS</h1>", unsafe_allow_html=True)
-st.write("Welcome to MediPredict's Project for helping you help patient's with Heart Disease")
-st.write("The Identifying Risk Factors and Predicting Long Term Hospital Admission and ICU Admission (PRAIS) project aims to develop a predictive dashboard using patient data from the Hero DMC Heart Institute, Ludhiana, Punjab, India. The project’s main goal is to analyze risk factors and create predictive models that help clinicians and hospital staff optimize resource management and improve patient outcomes by predicting long-term hospital stays and ICU admissions.  ")
 
+# About page content
+st.title("About MediPredict")
+
+st.markdown("""
+## Welcome to MediPredict
+We are a group of health informatics student comprised of passionate data scientists and healthcare professionals working together to develop innovative solutions in medical prediction and analytics.
+
+For our PRAIS project we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions.
+
+### Team Members:
+- **Ching Hong So**
+- **Dariia Reshetukha**
+- **Sandra Johansson**
+- **Roosa Hyppölä**
+- **Umiah Gohar**
+- **Anna Axell**
+            
+References
+
+For any inquiries, please contact us via our collective email:
+📧 **medipredict@stud.dsv.su.se**
+""")
+
+# Optional: Logo
+
+st.image("PRAIS.png", use_column_width=False, width=400)
