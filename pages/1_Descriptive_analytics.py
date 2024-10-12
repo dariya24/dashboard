@@ -248,6 +248,9 @@ with st.container():
     x["Proportion"] = (x[option] / x['SNO']) * 100
     x["Proportion"] = x["Proportion"].apply(lambda x: "{}%".format(round(x)))
     x.drop(columns={"SNO"}, inplace=True)
+
+    x.rename(columns={option: "Number of patients with {}".format(option)}, inplace=True)
+
     st.table(data=x.sort_values(by="Length of stay", ascending=False))
 
     text, color = get_pvalue_propotion(subset, option, "Length of stay")
@@ -264,6 +267,7 @@ with st.container():
 
     x["ICU_admission_status"] = x["ICU_admission_status"].apply(lambda x: "Admitted to ICU" if x == 1 else "Not admitted to ICU")
     x.rename(columns={"ICU_admission_status": "ICU Admission Status"})
+    x.rename(columns={option: "Number of patients with {}".format(option)}, inplace=True)
     st.table(data=x)
 
 
