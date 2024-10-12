@@ -164,8 +164,8 @@ st.write("Mean {} laboratory test value: {:.1f}".format(option, mean_value))
 st.write("Median {} laboratory test value: {:.1f}".format(option, median_value))
 
 
-x1 = df[df["Length of stay"] == "Less than 7 days"][option]
-x2 = df[df["Length of stay"] == "7 or more days"][option]
+x1 = subset[subset["Length of stay"] == "Less than 7 days"][option]
+x2 = subset[subset["Length of stay"] == "7 or more days"][option]
 # Group data together
 hist_data = [x1, x2]
 
