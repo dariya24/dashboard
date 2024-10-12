@@ -173,7 +173,7 @@ group_labels = ['Less than 7 days', '7 or more days']
 
 # Create distplot with custom bin_size
 fig = ff.create_distplot(
-    hist_data, group_labels, bin_size=[0.25, 0.25])
+    hist_data, group_labels, bin_size=[0.5, 0.5])
 
 # Add title
 fig.update_layout(title_text='{} Distribution'.format(option))
