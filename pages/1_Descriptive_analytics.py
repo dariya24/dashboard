@@ -100,7 +100,7 @@ st.header("Laboratory results")
 st.write("In this section the investigation of the laboratory tests results for various patient subgroups can be investigated")
 
 
-labs = ["Haemoglobin","Total Leukocytes Count","Platelets","Glucose","Urea,Creatinine"]
+labs = ["Haemoglobin","Total Leukocytes Count","Platelets","Glucose"]
 
 
 
