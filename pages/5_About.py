@@ -46,17 +46,18 @@ We are a group of health informatics students comprised of passionate data scien
 
 For our PRAIS project, we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions.
 
+**References** Dataset - Hospital Admissions Data from https://www.kaggle.com/datasets/ashishsahani/hospital-admissions-data?select=HDHI+Admission+data.csv
 ### Team Members:
 """)
 
 # Paths to the images
 image_paths = [
-    "C:/Users/PC/OneDrive/Dokument/Master i Hälsoinformatik/SU/HT24/Exercise/dashboard/assets/Dariia.jpg",
-    "C:/Users/PC/OneDrive/Dokument/Master i Hälsoinformatik/SU/HT24/Exercise/dashboard/assets/Martin.jpg",
-    "C:/Users/PC/OneDrive/Dokument/Master i Hälsoinformatik/SU/HT24/Exercise/dashboard/assets/Sandra.jpg",
-    "C:/Users/PC/OneDrive/Dokument/Master i Hälsoinformatik/SU/HT24/Exercise/dashboard/assets/Roosa.jpg",
-    "C:/Users/PC/OneDrive/Dokument/Master i Hälsoinformatik/SU/HT24/Exercise/dashboard/assets/Umiah.jpg",
-    "C:/Users/PC/OneDrive/Dokument/Master i Hälsoinformatik/SU/HT24/Exercise/dashboard/assets/Anna.jpg"
+    "assets/Dariia.jpg",
+    "assets/Martin.jpg",
+    "assets/Sandra.jpg",
+    "assets/Roosa.jpg",
+    "assets/Umiah.jpg",
+    "assets/Anna.jpg"
 ]
 
 # Corresponding names and titles
@@ -85,4 +86,4 @@ For any inquiries, please contact us via our collective email:
 📧 **medipredict@stud.dsv.su.se**
 """)
 # Optional: Logo
-st.image("C:/Users/PC/OneDrive/Dokument/Master i Hälsoinformatik/SU/HT24/Dashboard/Streamlit session Test/PRAIS.png", use_column_width=False, width=500)
+st.image("assets\PRAIS.png", use_column_width=False, width=500)
