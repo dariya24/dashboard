@@ -1,6 +1,11 @@
 import streamlit as st
 import pandas as pd
 
+st.set_page_config(
+    page_title="PRAIS - Descriptive",
+    page_icon="❤",
+)
+
 # Set background color (Soft white lavender)
 page_bg_img = '''
 <style>

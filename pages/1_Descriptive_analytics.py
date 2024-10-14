@@ -4,14 +4,44 @@ import matplotlib.pyplot as plt
 import numpy as np
 from dashboard_libraries import get_pvalue_propotion, prepare_dataframe_for_descriptive_analytics
 import plotly.figure_factory as ff
-
-
 st.set_page_config(
     page_title="PRAIS - Descriptive",
     page_icon="❤",
 )
 
-st.sidebar.image("./assets/P R A I S.png",)
+
+# Sidebar background with reduced opacity for image only
+sidebar_bg = '''
+<style>
+[data-testid="stSidebar"] {
+    position: relative;
+    background: none;  /* Remove any default background */
+}
+
+[data-testid="stSidebar"]::before {
+    content: "";
+    background-image: url("https://clipart-library.com/images_k/anatomical-heart-silhouette/anatomical-heart-silhouette-19.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.6;  /* Apply opacity only to background image */
+    z-index: -1;  /* Keep image behind the text */
+}
+
+/* Set darker text color in the sidebar */
+[data-testid="stSidebar"] .css-1d391kg p, [data-testid="stSidebar"] .css-1d391kg {
+    color: black;  /* Dark text */
+}
+</style>
+'''
+st.markdown(sidebar_bg, unsafe_allow_html=True)
+
+
 
 
 df = pd.read_csv("data/HDHI_Admission_data_post_processed.csv")
