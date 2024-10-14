@@ -5,6 +5,7 @@ import numpy as np
 import statsmodels.api as sm
 from collections import defaultdict
 import statsmodels.formula.api as smf
+import plotly.express as px
 
 #data preprocessing
 df = pd.read_csv("data/HDHI_Admission_data_post_processed.csv")
@@ -194,9 +195,17 @@ st.set_page_config(
 
 st.sidebar.image("./assets/P R A I S.png",)
 
-st.header("Risk factors")
+st.header("Odd Ratios of Risk factors")
+st.markdown("""
+### What is an Odds Ratio?
+An **odds ratio** (OR) is a measure of association between a certain factor and the target outcome. An OR of 1 means the factor does not affect the odds of the outcome, while an OR greater than 1 means the factor is associated with higher odds of the outcome, and an OR less than 1 means it is associated with lower odds.
 
-labs = ["The odd of staying in hosptial longer than 7 days", "The odd of getting admitted to ICU"]
+- **Odds Ratio > 1**: The factor increases the odds of the outcome.
+- **Odds Ratio < 1**: The factor decreases the odds of the outcome.
+- **Odds Ratio = 1**: The factor does not change the odds of the outcome.
+""")
+
+labs = ["The odd of staying in hospital longer than 7 days", "The odd of getting admitted to ICU"]
 
 option = st.selectbox(
     "Which target variables do you want to include?",
@@ -204,12 +213,12 @@ option = st.selectbox(
 )
 
 subpopulation = st.selectbox(
-    "What demographic parameter do you want to include?",
+    "What demographic parameters do you want to include?",
     ["Location", "Gender", "Age group"],
 )
 
 
-if option == "The odd of staying in hosptial longer than 7 days":
+if option == "The odd of staying in hospital longer than 7 days":
     para1 = 'Duration_Label'
 elif option == "The odd of getting admitted to ICU":
     para1 = 'ICU_admission_status'
@@ -230,30 +239,84 @@ risk_table = create_risk_table(processed_result)
 
 if subpopulation == "Location":
     risk_table.rename(columns={
-    'group_0_odds_ratio': 'urban group odds ratio',
-    'group_1_odds_ratio': 'rural group odds ratio'
+    'group_0_odds_ratio': 'urban group',
+    'group_1_odds_ratio': 'rural group'
 }, inplace=True)
     
 elif subpopulation == "Gender":
     risk_table.rename(columns={
-    'group_0_odds_ratio': 'female group odds ratio',
-    'group_1_odds_ratio': 'male group odds ratio'
+    'group_0_odds_ratio': 'female group',
+    'group_1_odds_ratio': 'male group'
 }, inplace=True)
     
 elif subpopulation == "Age group":
     risk_table.rename(columns={
-    'group_1_odds_ratio': '<18 age group odd ratio',
-    'group_2_odds_ratio': '18-35 age group odds ratio',
-    'group_3_odds_ratio': '36-65 age group odds ratio',
-    'group_4_odds_ratio': '>65 age group odds ratio',
+    'group_1_odds_ratio': '<18 age group',
+    'group_2_odds_ratio': '18-35 age group',
+    'group_3_odds_ratio': '36-65 age group',
+    'group_4_odds_ratio': '>65 age group',
 }, inplace=True)
-variables_to_remove = ["AgeGroup", "boolRural", "boolGender", "ICU_admission_status",'const']
-risk_table.drop(labels=variables_to_remove, errors='ignore', inplace=True)
-risk_table.fillna(0, inplace=True)
 
-st.bar_chart(risk_table, horizontal= True, stack=False)
+variables_to_remove = ["AgeGroup", "boolRural", "boolGender", "ICU_admission_status",'const','Duration_Label']
+risk_table.drop(labels=variables_to_remove, errors='ignore', inplace=True)
+risk_table.fillna(0, inplace=True)            
+risk_table.reset_index(inplace=True)
+risk_table.rename(columns={'index': 'variable'}, inplace=True)
+risk_table = risk_table.round(1)
+
+available_variables = risk_table['variable'].tolist()
+
+selected_variables = st.multiselect('Select variables to display in the table and bar chart', available_variables, default=available_variables)
+
+# Filter the risk_table based on the selected variables
+filtered_risk_table = risk_table[risk_table['variable'].isin(selected_variables)]
+
+st.markdown("""
+the NON-statistically significant variables & bars are not showing in the table and bar chart
+""")
+            
+# Display the filtered risk table
+st.dataframe(filtered_risk_table)
+
+# Get the list of group columns (excluding 'variable')
+group_columns = list(filtered_risk_table.columns)
+group_columns.remove('variable')
+
+# Melt the dataframe to long format
+df_long = filtered_risk_table.melt(id_vars='variable', value_vars=group_columns, var_name='group', value_name='odds_ratio')
+
+# Sort the dataframe based on 'odds_ratio' to maintain order
+df_long.sort_values(by='odds_ratio', inplace=True)
+
+# Create the horizontal bar chart
+fig = px.bar(
+    df_long,
+    x='odds_ratio',
+    y='variable',
+    color='group',
+    barmode='group',
+    text='odds_ratio',
+    orientation='h'  # Specify horizontal orientation
+)
+
+# Calculate height based on the number of variables
+num_variables = filtered_risk_table.shape[0]
+bar_height = 40  # Adjust this value as needed
+total_height = num_variables * bar_height + 200  # Additional padding for titles and axes
+
+# Corrected 'categoryorder' typo and adjusted sorting
+fig.update_layout(
+    xaxis_title='Odds Ratio',
+    yaxis_title='',
+    yaxis={'categoryorder': 'total ascending'},  # Corrected typo
+    legend_title='Group',
+    height=total_height  # Set dynamic height
+)
+fig.update_traces(textangle=0, textposition='outside')
+# Display the plot in Streamlit with automatic width adjustment
+st.plotly_chart(fig, use_container_width=True)
+
+#st.bar_chart(risk_table, horizontal= True, stack=False, x_label= 'odd ratio')
 
 #st.dataframe(risk_table)
-
-
 
