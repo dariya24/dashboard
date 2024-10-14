@@ -7,6 +7,43 @@ from collections import defaultdict
 import statsmodels.formula.api as smf
 import plotly.express as px
 
+st.set_page_config(
+    page_title="PRAIS - Diagnostic",
+    page_icon="❤",
+)
+
+# Sidebar background with reduced opacity for image only
+sidebar_bg = '''
+<style>
+[data-testid="stSidebar"] {
+    position: relative;
+    background: none;  /* Remove any default background */
+}
+
+[data-testid="stSidebar"]::before {
+    content: "";
+    background-image: url("https://clipart-library.com/images_k/anatomical-heart-silhouette/anatomical-heart-silhouette-19.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.6;  /* Apply opacity only to background image */
+    z-index: -1;  /* Keep image behind the text */
+}
+
+/* Set darker text color in the sidebar */
+[data-testid="stSidebar"] .css-1d391kg p, [data-testid="stSidebar"] .css-1d391kg {
+    color: black;  /* Dark text */
+}
+</style>
+'''
+
+st.markdown(sidebar_bg, unsafe_allow_html=True)
+
 #data preprocessing
 df = pd.read_csv("data/HDHI_Admission_data_post_processed.csv")
 age_group_mapping = {
@@ -188,16 +225,10 @@ def create_risk_table(processed_results):
     return df
 
 
-st.set_page_config(
-    page_title="PRAIS - Diagnostic",
-    page_icon="👋",
-)
+st.markdown("<h1 style='color: purple;'>Odds Ratios of Risk factors</h1>", unsafe_allow_html=True)
 
-st.sidebar.image("./assets/P R A I S.png",)
-
-st.header("Odd Ratios of Risk factors")
 st.markdown("""
-### What is an Odds Ratio?
+## What is an Odds Ratio?
 An **odds ratio** (OR) is a measure of association between a certain factor and the target outcome. An OR of 1 means the factor does not affect the odds of the outcome, while an OR greater than 1 means the factor is associated with higher odds of the outcome, and an OR less than 1 means it is associated with lower odds.
 
 - **Odds Ratio > 1**: The factor increases the odds of the outcome.

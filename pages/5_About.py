@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="PRAIS - Descriptive",
+    page_title="PRAIS - About",
     page_icon="❤",
 )
 
@@ -84,6 +84,5 @@ st.markdown("""
 For any inquiries, please contact us via our collective email:
 📧 **medipredict@stud.dsv.su.se**
 """)
-
 # Optional: Logo
-st.image("C:/Users/PC/OneDrive/Dokument/Master i Hälsoinformatik/SU/HT24/Dashboard/Streamlit session Test/PRAIS.png", use_column_width=False, width=400)
+st.image("C:/Users/PC/OneDrive/Dokument/Master i Hälsoinformatik/SU/HT24/Dashboard/Streamlit session Test/PRAIS.png", use_column_width=False, width=500)

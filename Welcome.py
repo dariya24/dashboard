@@ -1,8 +1,6 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 
-#this sets page title and icon, non critical
+# Set page config
 st.set_page_config(
     page_title="Page 1 - PRAIS",
     page_icon="❤️",
@@ -40,8 +38,9 @@ sidebar_bg = '''
 
 st.markdown(sidebar_bg, unsafe_allow_html=True)
 
-# Main content here
-st.markdown("<h1 style='color: red;'>PRAIS</h1>", unsafe_allow_html=True)
-st.write("Welcome to MediPredict's Project for helping you help patient's with Heart Disease")
-st.write("The Identifying Risk Factors and Predicting Long Term Hospital Admission and ICU Admission (PRAIS) project aims to develop a predictive dashboard using patient data from the Hero DMC Heart Institute, Ludhiana, Punjab, India. The project’s main goal is to analyze risk factors and create predictive models that help clinicians and hospital staff optimize resource management and improve patient outcomes by predicting long-term hospital stays and ICU admissions.  ")
 
+# Main content here
+st.markdown("<h1 style='color: purple;'>PRAIS</h1>", unsafe_allow_html=True)
+st.write("Welcome to MediPredict's Project PRAIS - Predicting Risk Admissions ICU Stays!")
+st.write("**Why?** Identifying risk factors for, as well as predicting long-term hospital admission and ICU admission can improve future planning of resources. The PRAIS project aims to develop a predictive dashboard providing also descriptive and diagnostic data, using patient data from the Hero DMC Heart Institute, Ludhiana, Punjab, India.")
+st.write("**For whom?** For clinicians and managers within healthcare.")

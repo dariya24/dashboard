@@ -48,8 +48,7 @@ df = pd.read_csv("data/HDHI_Admission_data_post_processed.csv")
 
 df = prepare_dataframe_for_descriptive_analytics(df)
 
-
-st.header("Demographic information")
+st.markdown("<h1 style='color: purple;'>Demographic information</h1>", unsafe_allow_html=True)
 
 st.write("In this section the overview of the demographic in the dataset is presented")
 
