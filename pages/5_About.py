@@ -1,5 +1,10 @@
 import streamlit as st
 
+st.set_page_config(
+    page_title="PRAIS - About",
+    page_icon="❤",
+)
+
 # Sidebar background with reduced opacity for image only
 sidebar_bg = '''
 <style>
@@ -32,30 +37,54 @@ sidebar_bg = '''
 
 st.markdown(sidebar_bg, unsafe_allow_html=True)
 
-
 # About page content
-st.title("About MediPredict")
+st.markdown("<h1 style='color: purple;'>About MediPredict</h1>", unsafe_allow_html=True)
 
 st.markdown("""
 ## Welcome to MediPredict
-We are a group of health informatics student comprised of passionate data scientists and healthcare professionals working together to develop innovative solutions in medical prediction and analytics.
+We are a group of health informatics students comprised of passionate data scientists and healthcare professionals working together to develop innovative solutions in medical prediction and analytics.
 
-For our PRAIS project we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions.
+For our PRAIS project, we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions.
 
+**References** Dataset - Hospital Admissions Data from https://www.kaggle.com/datasets/ashishsahani/hospital-admissions-data?select=HDHI+Admission+data.csv
 ### Team Members:
-- **Ching Hong So**
-- **Dariia Reshetukha**
-- **Sandra Johansson**
-- **Roosa Hyppölä**
-- **Umiah Gohar**
-- **Anna Axell**
-            
-References
+""")
 
+# Paths to the images
+image_paths = [
+    "assets/Dariia.jpg",
+    "assets/Martin.jpg",
+    "assets/Sandra.jpg",
+    "assets/Roosa.jpg",
+    "assets/Umiah.jpg",
+    "assets/Anna.jpg"
+]
+
+# Corresponding names and titles
+people_info = [
+    ("Dariia Reshetukha", "Technical lead"),
+    ("Ching Hong So", "Data and Machine Learning Specialist"),
+    ("Sandra Johansson", "Documentation Lead"),
+    ("Roosa Hyppölä", "Quality Assurance Lead"),
+    ("Umiah Gohar", "Stakeholder Contact Person"),
+    ("Anna Axell", "Clinical Advisor")
+]
+
+# Display images and info in two rows, 3 columns per row
+for row in range(0, len(image_paths), 3):
+    cols = st.columns(3)
+    for i, col in enumerate(cols):
+        if row + i < len(image_paths):
+            with col:
+                st.image(image_paths[row + i], width=150)  # Adjust the width for smaller pictures
+                st.write(f"**{people_info[row + i][0]}**")  # Name
+                st.write(people_info[row + i][1])  # Title
+
+# References
+st.markdown("""
 For any inquiries, please contact us via our collective email:
 📧 **medipredict@stud.dsv.su.se**
 """)
-
 # Optional: Logo
+st.image("assets/PRAIS.png", use_column_width=False, width=500)
 
-st.image("PRAIS.png", use_column_width=False, width=400)
