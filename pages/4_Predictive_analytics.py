@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+from run_ML import get_ICU_ML_Prediction
 # Set background color (Soft white lavender)
 page_bg_img = '''
 <style>
@@ -95,13 +95,14 @@ col3, col4 = st.columns(2)
 # Column 1 selectboxes
 with col3:
     # Anaemia selectbox
-    selected_anaemia = st.selectbox("Anaemia:", ["No", "Anaemia", "Severe Anaemia"])
+    selected_anaemia = st.selectbox("Anaemia:", ["No", "Anaemia", "Severe Anaemia"]) ## USED IN ICU ML
     
     # Heart Failure selectbox
     selected_heart_failure = st.selectbox(
         "Heart Failure:", 
         ["No", "Heart Failure", "Heart Failure with Reduced Ejection Fraction", "Heart Failure with Normal Ejection Fraction"]
     )
+
 
     # Shock selectbox
     selected_shock = st.selectbox("Shock:", ["No", "Shock", "Cardiogenic shock"])
@@ -135,8 +136,8 @@ col5, col6 = st.columns(2)
 with col5:
     dm = st.selectbox("Diabetes Mellitus (DM)", ("Yes", "No"), key="dm_input")
     htn = st.selectbox("Hypertension (HTN)", ("Yes", "No"), key="htn_input")
-    ckd = st.selectbox("Chronic Kidney Disease (CKD)", ("Yes", "No"), key="ckd_input")
-    aki = st.selectbox("Acute Kidney Injury", ("Yes", "No"), key="aki_input")
+    ckd = st.selectbox("Chronic Kidney Disease (CKD)", ("Yes", "No"), key="ckd_input") ## USED IN ICU ML
+    aki = st.selectbox("Acute Kidney Injury", ("Yes", "No"), key="aki_input") ## USED IN ICU ML
     ortho = st.selectbox("Orthostatic", ("Yes", "No"), key="ortho_input")
     dvt = st.selectbox("Deep Venous Thrombosis", ("Yes", "No"), key="dvt_input")
     pemb = st.selectbox("Pulmonary Embolism", ("Yes", "No"), key="pemb_input")
@@ -144,15 +145,15 @@ with col5:
 
 with col6:
     ac_pain = st.selectbox("Atypical Chest Pain", ("Yes", "No"), key="acp_input")
-    cardiac_enzymes = st.selectbox("Raised Cardiac Enzymes", ("Yes", "No"), key="enzymes_input")
+    cardiac_enzymes = st.selectbox("Raised Cardiac Enzymes", ("Yes", "No"), key="enzymes_input") ## USED IN ICU ML
     coronary_artery_disease = st.selectbox("Coronary Artery Disease", ("Yes", "No"), key="cad_input")
-    prior_cardiomyopathy = st.selectbox("Prior Cardiomyopathy", ("Yes", "No"), key="cm_input")
+    prior_cardiomyopathy = st.selectbox("Prior Cardiomyopathy", ("Yes", "No"), key="cm_input") ## USED IN ICU ML
     stable_angina = st.selectbox("Stable Angina", ("Yes", "No"), key="sa_input")
     valvular_heart_disease = st.selectbox("Valvular Heart Disease", ("Yes", "No"), key="vhd_input")
     congenital_heart_disease = st.selectbox("Congenital Heart Disease", ("Yes", "No"), key="chd_input")
-    
 
     
+
 
 # Section 3: Lab Values (Collapsible)
 with st.expander("Enter Lab Values"):
@@ -165,45 +166,80 @@ with st.expander("Enter Lab Values"):
 
 
 
+
 # Prediction Button
 if st.button("Predict", key="predict_button"):
     # Collect inputs in a Pandas DataFrame, with condition values based on whether they are in selected_conditions_ecg
     input_data = pd.DataFrame({
-        'Age': [age],
+        'Age': [age], # -- used in ICU ML
         'Gender': [gender],
         'Living Area': [rural_urban],
         'Smoking': [smoking],
         'Alcohol': [alcohol],
         'DM': [dm],
         'HTN': [htn],
-        'Raised Cardiac Enzymes': [cardiac_enzymes],
-        'HB': [hb],
-        'Glucose': [glucose],
+        'HB': [hb], # -- used in ICU ML
+        'Leukocytes': [leukocytes], # -- used in ICU ML
+        'Glucose': [glucose], # -- used in ICU ML
+        'Urea': [urea], # -- used in ICU ML
+        'Creatinine': [crea], # -- used in ICU ML
         'Pulmonary Embolism': ['Yes' if 'Pulmonary Embolism' in selected_conditions_ecg else 'No'],
-        'Cardiogenic Shock': ['Yes' if 'Cardiogenic Shock' in selected_conditions_ecg else 'No'],
+
         'PSVT': ['Yes' if 'PSVT' in selected_conditions_ecg else 'No'],
-        'Ventricular Tachycardia': ['Yes' if 'Ventricular Tachycardia' in selected_conditions_ecg else 'No'],
-        'Atrial Fibrillation': ['Yes' if 'Atrial Fibrillation' in selected_conditions_ecg else 'No'],
+
+
         'Sick Sinus Syndrome': ['Yes' if 'Sick Sinus Syndrome' in selected_conditions_ecg else 'No'],
-        'Complete Heart Block': ['Yes' if 'Complete Heart Block' in selected_conditions_ecg else 'No'],
-        'Heart Failure': ['Yes' if 'Heart Failure' in selected_conditions_ecg else 'No'],
+
+
+
+
+
+        # Please don't delete/change those rows, they are needed for ICU model
+        'Prior_Cardiomyopathy': [prior_cardiomyopathy],
+        'Chronic Kidney Disease': [ckd],
+        'Raised Cardiac Enzymes': [cardiac_enzymes],
+        'Anaemia': ['Yes' if 'Anaemia' in selected_anaemia else 'No'],
+        'Stable Angina': [stable_angina],
+        'Acute Coronary Syndrome': ['Yes' if 'Acute Coronary Syndrome' in selected_conditions_ecg else 'No'],
         'STEMI': ['Yes' if 'STEMI' in selected_conditions_ecg else 'No'],
-        'Acute Coronary Syndrome': ['Yes' if 'Acute Coronary Syndrome' in selected_conditions_ecg else 'No']
+        'Atypical Chest Pain': [ac_pain],
+        'Heart Failure': ['Yes' if 'Heart Failure' in selected_conditions_ecg else 'No'],
+        'Heart Failure with Reduced Ejection Fraction': ['Yes' if 'Heart Failure with Reduced Ejection Fraction' in selected_conditions_ecg else 'No'],
+        'Heart Failure with Normal Ejection Fraction': ['Yes' if 'Heart Failure with Normal Ejection Fraction' in selected_conditions_ecg else 'No'],
+        'Complete Heart Block': ['Yes' if 'Complete Heart Block' in selected_conditions_ecg else 'No'],
+        'Acute Kidney Injury': [aki],
+        'Atrial Fibrillation': ['Yes' if 'Atrial Fibrillation' in selected_conditions_ecg else 'No'],
+        'Ventricular Tachycardia': ['Yes' if 'Ventricular Tachycardia' in selected_conditions_ecg else 'No'],
+        'Cardiogenic Shock': ['Yes' if 'Cardiogenic Shock' in selected_conditions_ecg else 'No'],
+        'Shock': ['Yes' if 'Shock' in selected_conditions_ecg else 'No'],
+
+
     })
 
     input_data.rename_axis("Patient Entry")
     input_data.index = ["Patient Entry"]
-                                         
-                                         
+
+
     # Display the input data
     st.write("Collected Input Data:")
-    st.write(input_data) 
+    st.write(input_data)
+
+
+    prediction_result, data = get_ICU_ML_Prediction(input_data)
+
+    st.write("Collected Input Data for ML")
+    st.write(data)
+
+    if prediction_result == 1:
+        prediction_icu = "Yes"
+    else:
+        prediction_icu = "No"
 
     # Placeholder for prediction model (replace with actual model code)
     prediction_long_term = "Yes"  # Dummy result for long-term stay prediction
-    prediction_icu = "No"  # Dummy result for ICU admission prediction
 
     # Display the predictions
     st.subheader("Prediction Results:")
     st.write(f"Long-term stay (7+ days): {prediction_long_term}")
     st.write(f"ICU admission: {prediction_icu}")
+
