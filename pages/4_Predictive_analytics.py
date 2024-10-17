@@ -160,13 +160,6 @@ with col6:
     valvular_heart_disease = st.selectbox("Valvular Heart Disease", ("Yes", "No"), key="vhd_input")
     congenital_heart_disease = st.selectbox("Congenital Heart Disease", ("Yes", "No"), key="chd_input")
 
-    dm = st.selectbox("Diabetes Mellitus (DM)", ("", "Yes", "No"), key="dm_input")  # Empty by default
-    htn = st.selectbox("Hypertension (HTN)", ("", "Yes", "No"), key="htn_input")  # Empty by default
-    ckd = st.selectbox("Chronic Kidney Disease (CKD)", ("", "Yes", "No"), key="ckd_input")  # Empty by default
-    aki = st.selectbox("Acute Kidney Injury", ("", "Yes", "No"), key="aki_input")  # Empty by default
-    ortho = st.selectbox("Orthostatic", ("", "Yes", "No"), key="ortho_input")  # Empty by default
-    dvt = st.selectbox("Deep Venous Thrombosis (DVT)", ("", "Yes", "No"), key="dvt_input")  # Empty by default
-    pemb = st.selectbox("Pulmonary Embolism (PE)", ("", "Yes", "No"), key="pemb_input")  # Empty by default
 
 with col6:
     ac_pain = st.selectbox("Atypical Chest Pain", ("", "Yes", "No"), key="acp_input")  # Empty by default
