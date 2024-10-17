@@ -1,8 +1,6 @@
 import pandas as pd
 import pickle
 
-from sklearn import preprocessing
-
 def normalize_dataframe(df, columns, norm_columns):
     filename = 'assets/models/241017_MinMaxScaler.sav'
     min_max_scaler = pickle.load(open(filename, 'rb'))
