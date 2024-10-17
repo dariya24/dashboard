@@ -1,15 +1,12 @@
 import streamlit as st
 import pandas as pd
-<<<<<<< HEAD
 from run_ML import get_ICU_ML_Prediction
-=======
 
 st.set_page_config(
     page_title="PRAIS - About",
     page_icon="❤",
 )
 
->>>>>>> be7668615362cffdca7e1e7eb3206afc0e112a4f
 # Set background color (Soft white lavender)
 page_bg_img = '''
 <style>
@@ -106,12 +103,9 @@ col3, col4 = st.columns(2)
 # Column 1 selectboxes
 with col3:
     # Anaemia selectbox
-<<<<<<< HEAD
     selected_anaemia = st.selectbox("Anaemia:", ["No", "Anaemia", "Severe Anaemia"]) ## USED IN ICU ML
-=======
     selected_anaemia = st.selectbox("Anaemia:", ["", "No", "Anaemia", "Severe Anaemia"])  # Empty by default
->>>>>>> be7668615362cffdca7e1e7eb3206afc0e112a4f
-    
+
     # Heart Failure selectbox
     selected_heart_failure = st.selectbox(
         "Heart Failure:", 
@@ -148,7 +142,6 @@ with col4:
 col5, col6 = st.columns(2)
 
 with col5:
-<<<<<<< HEAD
     dm = st.selectbox("Diabetes Mellitus (DM)", ("Yes", "No"), key="dm_input")
     htn = st.selectbox("Hypertension (HTN)", ("Yes", "No"), key="htn_input")
     ckd = st.selectbox("Chronic Kidney Disease (CKD)", ("Yes", "No"), key="ckd_input") ## USED IN ICU ML
@@ -168,7 +161,6 @@ with col6:
     congenital_heart_disease = st.selectbox("Congenital Heart Disease", ("Yes", "No"), key="chd_input")
 
     
-=======
     dm = st.selectbox("Diabetes Mellitus (DM)", ("", "Yes", "No"), key="dm_input")  # Empty by default
     htn = st.selectbox("Hypertension (HTN)", ("", "Yes", "No"), key="htn_input")  # Empty by default
     ckd = st.selectbox("Chronic Kidney Disease (CKD)", ("", "Yes", "No"), key="ckd_input")  # Empty by default
@@ -185,7 +177,6 @@ with col6:
     stable_angina = st.selectbox("Stable Angina", ("", "Yes", "No"), key="sa_input")  # Empty by default
     valvular_heart_disease = st.selectbox("Valvular Heart Disease", ("", "Yes", "No"), key="vhd_input")  # Empty by default
     congenital_heart_disease = st.selectbox("Congenital Heart Disease", ("", "Yes", "No"), key="chd_input")  # Empty by default
->>>>>>> be7668615362cffdca7e1e7eb3206afc0e112a4f
 
 
 # Section 3: Lab Values (Collapsible)
