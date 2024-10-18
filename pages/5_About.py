@@ -44,12 +44,11 @@ st.markdown("""
 ## Welcome to MediPredict
 We are a group of health informatics students comprised of passionate data scientists and healthcare professionals working together to develop innovative solutions in medical prediction and analytics.
 
-For our PRAIS project, we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions.
+For our PRAIS project, we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions that might be of use for hospital managers and clinical coordinators within healthcare for optimizing care strategies and improving patient outcomes.
 
 **References**  
-<br>
 <a href="https://www.herodmc.com/" target="_blank">Hero DMC Heart Institute Website</a>  
-<br>
+
 <a href="https://www.kaggle.com/datasets/ashishsahani/hospital-admissions-data?select=HDHI+Admission+data.csv" target="_blank">Dataset - Hospital Admissions Data on Kaggle</a>  
 """, unsafe_allow_html=True)
 

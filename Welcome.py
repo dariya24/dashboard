@@ -6,6 +6,28 @@ st.set_page_config(
     page_icon="❤️",
 )
 
+# Inject CSS to set the background image for the main content and change text color
+background_image_css = '''
+<style>
+/* Set the main app background with the image */
+[data-testid="stAppViewContainer"] > .main {
+    background: url("https://img.goodfon.com/original/1920x1200/2/d1/badfon-taj-mahal-india-sunrise.jpg");
+    background-size: cover; /* Ensure the background covers the entire page */
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white; /* Make the text white */
+}
+
+/* Keep the PRAIS title purple */
+h1 {
+    color: purple !important;
+}
+</style>
+'''
+
+# Inject the CSS for the background image and text color change
+st.markdown(background_image_css, unsafe_allow_html=True)
+
 # Sidebar background with reduced opacity for image only
 sidebar_bg = '''
 <style>
@@ -38,17 +60,17 @@ sidebar_bg = '''
 
 st.markdown(sidebar_bg, unsafe_allow_html=True)
 
-
 # Main content here
 st.markdown("<h1 style='color: purple;'>PRAIS</h1>", unsafe_allow_html=True)
 st.write("Welcome to MediPredict's Project PRAIS - Predicting Risk Admissions ICU Stays!")
 st.write("**Why?** Identifying risk factors for, as well as predicting long-term hospital admission and ICU admission can improve future planning of resources. The PRAIS project aims to develop a predictive dashboard providing also descriptive and diagnostic data, using patient data from the Hero DMC Heart Institute, Ludhiana, Punjab, India.")
 st.write("**For whom?** This work is crucial for hospital managers and clinical coordinators within healthcare to optimize care strategies and improve patient outcomes, particularly for patients at high risk of requiring extended hospital stays or ICU admissions.")
 
-# Add space before the iframe
-st.markdown("<br><br><br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+st.markdown("<br><br><br>", unsafe_allow_html=True)
+st.write("⬇️ Please scroll down for a virtual tour of the Hero DMC Heart Institute")
 
-st.write("**Join a virtual tour at the Hero DMC Heart Institute.**")
+# Add space before the iframe
+st.markdown("<br><br><br><br>", unsafe_allow_html=True)
 
 # Embed the virtual tour iframe at the bottom of the page
 st.markdown(
