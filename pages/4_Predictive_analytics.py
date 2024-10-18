@@ -104,7 +104,6 @@ col3, col4 = st.columns(2)
 with col3:
     # Anaemia selectbox
     selected_anaemia = st.selectbox("Anaemia:", ["No", "Anaemia", "Severe Anaemia"])  ## USED IN ICU ML
-    selected_anaemia = st.selectbox("Anaemia:", ["", "No", "Anaemia", "Severe Anaemia"])  # Empty by default
 
     # Heart Failure selectbox
     selected_heart_failure = st.selectbox(
@@ -160,18 +159,6 @@ with col6:
     valvular_heart_disease = st.selectbox("Valvular Heart Disease", ("Yes", "No"), key="vhd_input")
     congenital_heart_disease = st.selectbox("Congenital Heart Disease", ("Yes", "No"), key="chd_input")
 
-
-with col6:
-    ac_pain = st.selectbox("Atypical Chest Pain", ("", "Yes", "No"), key="acp_input")  # Empty by default
-    cardiac_enzymes = st.selectbox("Raised Cardiac Enzymes", ("", "Yes", "No"), key="enzymes_input")  # Empty by default
-    coronary_artery_disease = st.selectbox("Coronary Artery Disease", ("", "Yes", "No"),
-                                           key="cad_input")  # Empty by default
-    prior_cardiomyopathy = st.selectbox("Prior Cardiomyopathy", ("", "Yes", "No"), key="cm_input")  # Empty by default
-    stable_angina = st.selectbox("Stable Angina", ("", "Yes", "No"), key="sa_input")  # Empty by default
-    valvular_heart_disease = st.selectbox("Valvular Heart Disease", ("", "Yes", "No"),
-                                          key="vhd_input")  # Empty by default
-    congenital_heart_disease = st.selectbox("Congenital Heart Disease", ("", "Yes", "No"),
-                                            key="chd_input")  # Empty by default
 
 # Section 3: Lab Values (Collapsible)
 with st.expander("Enter Lab Values"):
