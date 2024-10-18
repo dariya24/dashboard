@@ -52,7 +52,7 @@ st.markdown(sidebar_bg, unsafe_allow_html=True)
 
 st.markdown("<h1 style='color: purple;'>Hospital Stay and ICU Admission Prediction</h1>", unsafe_allow_html=True)
 
-st.write("To be able to predict hospital admissions you have to fill in all the fields below. ")
+st.write("**Requirements**: To be able to predict hospital admissions you have to fill in all the fields below. There is no possibility to choose **Not applicable**. ")
 
 # Section 1: Demographic and Lifestyle Information
 st.markdown("<h2 style='color: black;'>Demographic & Lifestyle</h2>", unsafe_allow_html=True)
@@ -70,6 +70,8 @@ with col2:
 
 # Section 2: Medical Conditions
 st.markdown("<h2 style='color: black;'>Medical Conditions</h2>", unsafe_allow_html=True)
+# Place the st.write statement outside the column layout so it doesn't interfere with the columns
+st.write("Every field will have the default **'No'** to save clicks if not relevant for the specific patient.")
 
 # ECG selectboxes
 previous_ecg = st.selectbox("Previous ECG?", ["", "No", "Yes"])  # Empty by default
@@ -100,6 +102,7 @@ if previous_ecg == "Yes":
 # Split layout into 2 columns
 col3, col4 = st.columns(2)
 
+
 # Column 1 selectboxes
 with col3:
     # Anaemia selectbox
@@ -108,9 +111,12 @@ with col3:
     # Heart Failure selectbox
     selected_heart_failure = st.selectbox(
         "Heart Failure:",
-        ["", "No", "Heart Failure", "Heart Failure with Reduced Ejection Fraction",
+        ["No", "Heart Failure", "Heart Failure with Reduced Ejection Fraction",
          "Heart Failure with Normal Ejection Fraction"]
-    )  # Empty by default
+    )  # 'No' is the default selection
+
+# Column 2 selectboxes can be added under col4 if needed
+ 
 
     # Shock selectbox
     selected_shock = st.selectbox("Shock:", ["", "No", "Shock", "Cardiogenic shock"])  # Empty by default
@@ -160,15 +166,40 @@ with col6:
     congenital_heart_disease = st.selectbox("Congenital Heart Disease", ("Yes", "No"), key="chd_input")
 
 
+# Heading for the Lab Values section
+st.markdown("<h2 style='color: black;'>Lab Values</h2>", unsafe_allow_html=True)
+st.write("Lab units of measurement align with UCUM standards for interoperability and data exchange. You can change this directly in the field or via +/- buttons.")
+st.write("Use the **+** or **-** buttons to adjust the values, or type directly in the box for quicker input. Note: Pressing too quickly on **+** or **-** might reload the page, but you won't lose any other information already entered.")
+
+
 # Section 3: Lab Values (Collapsible)
 with st.expander("Enter Lab Values"):
-    hb = st.number_input("Hemoglobin (HB)", min_value=6.4, max_value=18.3, value=13.0, key="hb_input")
-    glucose = st.number_input("Glucose", min_value=1.2, max_value=294.0, value=90.0, key="glucose_input")
-    leukocytes = st.number_input("Total Leucocytes Count", min_value=1.0, max_value=294.0, value=90.0,
-                                 key="leukocyes_input")
-    platelets = st.number_input("Platelets", min_value=1.0, max_value=294.0, value=90.0, key="platelets")
-    urea = st.number_input("Urea", min_value=1.0, max_value=294.0, value=90.0, key="urea_input")
-    crea = st.number_input("Creatinine", min_value=1.0, max_value=294.0, value=90.0, key="crea_input")
+    
+    # Cached function to prevent unnecessary recalculations
+    @st.cache_data
+    def get_initial_lab_values():
+        return {
+            "hb": 13.0,
+            "glucose": 90.0,
+            "leukocytes": 7.5,
+            "platelets": 250.0,
+            "urea": 14.0,
+            "crea": 1.0
+        }
+
+    # Retrieve initial values from cache
+    lab_values = get_initial_lab_values()
+
+    # Set up number inputs with step increments to avoid frequent reloading
+    hb = st.number_input("Hemoglobin (HB) [g/dL]", min_value=3.0, max_value=26.5, value=lab_values['hb'], step=0.1, key="hb_input")
+    glucose = st.number_input("Glucose [mg/dL]", min_value=1.2, max_value=888.0, value=lab_values['glucose'], step=1.0, key="glucose_input")
+    leukocytes = st.number_input("Total Leukocytes Count [10^9/L]", min_value=0.1, max_value=261.0, value=lab_values['leukocytes'], step=0.1, key="leukocytes_input")
+    platelets = st.number_input("Platelets [10^9/L]", min_value=0.58, max_value=1111.0, value=lab_values['platelets'], step=10.0, key="platelets_input")
+    urea = st.number_input("Urea (BUN) [mg/dL]", min_value=0.1, max_value=495.0, value=lab_values['urea'], step=1.0, key="urea_input")
+    crea = st.number_input("Creatinine [mg/dL]", min_value=0.065, max_value=15.63, value=lab_values['crea'], step=0.1, key="crea_input")
+
+
+
 
 # Prediction Button
 if st.button("Predict", key="predict_button"):
