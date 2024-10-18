@@ -79,7 +79,7 @@ st.markdown("<h2 style='color: black;'>Medical Conditions</h2>", unsafe_allow_ht
 st.write("Every field will have the default **'No'** to save clicks if not relevant for the specific patient.")
 
 # ECG selectboxes
-previous_ecg = st.selectbox("Previous ECG?", ["", "No", "Yes"])  # Empty by default
+previous_ecg = st.selectbox("Previous ECG?", ["No", "Yes"])  # No by default
 
 # Initialize selected_conditions_ecg as an empty list to avoid errors if not defined later
 selected_conditions_ecg = []
@@ -174,7 +174,7 @@ with col6:
 # Heading for the Lab Values section
 st.markdown("<h2 style='color: black;'>Lab Values</h2>", unsafe_allow_html=True)
 st.write("Lab units of measurement align with UCUM standards for interoperability and data exchange.")
-st.write("Use the **+** or **-** buttons to adjust the values, or type directly in the box for quicker input. Note: Pressing too quickly on **+** or **-** might reload the page, but you won't lose any other information already entered.")
+st.write("Use the **+** or **-** buttons to adjust the values, or type directly in the box for quicker input. **Note:** Pressing too quickly on **+** or **-** might reload the page, but you won't lose any other information already entered.")
 st.markdown("For unit conversions, you can use the [UCUM Web Tool](https://ucum.nlm.nih.gov/ucum-lhc/demo.html).")
 
 
