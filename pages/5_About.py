@@ -46,7 +46,34 @@ We are a group of health informatics students comprised of passionate data scien
 
 For our PRAIS project, we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions.
 
-**References** Dataset - Hospital Admissions Data from https://www.kaggle.com/datasets/ashishsahani/hospital-admissions-data?select=HDHI+Admission+data.csv
+**References**  
+<br>
+<a href="https://www.kaggle.com/datasets/ashishsahani/hospital-admissions-data?select=HDHI+Admission+data.csv" target="_blank">Dataset - Hospital Admissions Data on Kaggle</a>  
+<br>
+<a href="https://www.herodmc.com/" target="_blank">Hero DMC Heart Institute Website</a>  
+""", unsafe_allow_html=True)
+
+# Add info button for extra details about the dataset
+with st.expander("ℹ️ More information about the dataset"):
+    st.write("""
+    The data used in this study was collected from patients admitted to the Hero DMC Heart Institute, Ludhiana, Punjab, India, 
+    between April 1, 2017, and March 31, 2019. Over this two-year period, 14,845 admissions were recorded, corresponding 
+    to 12,238 unique patients, including 1,921 patients with multiple admissions. The hospital is a tertiary care facility 
+    affiliated with Dayanand Medical College and Hospital.
+
+    The dataset includes patient demographics (age, sex, and locality), admission details (emergency or outpatient), medical history 
+    (smoking, alcohol use, diabetes, hypertension, coronary artery disease, cardiomyopathy, chronic kidney disease), and laboratory 
+    results (hemoglobin, total lymphocyte count, platelets, glucose, urea, creatinine, brain natriuretic peptide, raised cardiac enzymes, and ejection fraction).
+
+    In total, 28 features related to comorbidities, including heart failure, STEMI, pulmonary embolism, and types of shock, were recorded. 
+    Shock was classified into categories such as non-cardiac and cardiogenic shock, with some cases considered multifactorial.
+
+    For analysis, we retained 17 key features, including prior cardiomyopathy, chronic kidney disease, raised cardiac enzymes, various heart failure 
+    types, and conditions such as atrial fibrillation, ventricular tachycardia, and cardiogenic shock. Laboratory values were also maintained as part of the final dataset.
+    """)
+
+# Team Members
+st.markdown("""
 ### Team Members:
 """)
 
@@ -85,6 +112,6 @@ st.markdown("""
 For any inquiries, please contact us via our collective email:
 📧 **medipredict@stud.dsv.su.se**
 """)
+
 # Optional: Logo
 st.image("assets/PRAIS.png", use_column_width=False, width=500)
-

@@ -43,4 +43,17 @@ st.markdown(sidebar_bg, unsafe_allow_html=True)
 st.markdown("<h1 style='color: purple;'>PRAIS</h1>", unsafe_allow_html=True)
 st.write("Welcome to MediPredict's Project PRAIS - Predicting Risk Admissions ICU Stays!")
 st.write("**Why?** Identifying risk factors for, as well as predicting long-term hospital admission and ICU admission can improve future planning of resources. The PRAIS project aims to develop a predictive dashboard providing also descriptive and diagnostic data, using patient data from the Hero DMC Heart Institute, Ludhiana, Punjab, India.")
-st.write("**For whom?** For clinicians and managers within healthcare.")
+st.write("**For whom?** This work is crucial for hospital managers and clinical coordinators within healthcare to optimize care strategies and improve patient outcomes, particularly for patients at high risk of requiring extended hospital stays or ICU admissions.")
+
+# Add space before the iframe
+st.markdown("<br><br><br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
+st.write("**Join a virtual tour at the Hero DMC Heart Institute.**")
+
+# Embed the virtual tour iframe at the bottom of the page
+st.markdown(
+    '''
+    <iframe src="https://herodmc.com/virtual-tour/dmc.html" width="90%" height="350" frameborder="0" allowfullscreen></iframe>
+    ''',
+    unsafe_allow_html=True
+)
