@@ -56,6 +56,11 @@ st.write("**Requirements**: To be able to predict hospital admissions you have t
 
 # Section 1: Demographic and Lifestyle Information
 st.markdown("<h2 style='color: black;'>Demographic & Lifestyle</h2>", unsafe_allow_html=True)
+st.markdown("""
+**Note**: The categories for **Smoking** and **Alcohol** are based on Yes/No answers. 
+- For **Smoking**, 'Yes' includes current smokers or recent quitters.
+- For **Alcohol**, 'Yes' refers to any alcohol consumption, but the dataset does not specify frequency or quantity.
+""")
 
 col1, col2 = st.columns(2)
 
@@ -119,12 +124,12 @@ with col3:
  
 
     # Shock selectbox
-    selected_shock = st.selectbox("Shock:", ["", "No", "Shock", "Cardiogenic shock"])  # Empty by default
+    selected_shock = st.selectbox("Shock:", ["No", "Shock", "Cardiogenic shock"])  # No by default
 
 # Column 2 selectboxes
 with col4:
     # Infection selectbox
-    infection_present = st.selectbox("Is there an infection?", ["", "No", "Yes"])  # Empty by default
+    infection_present = st.selectbox("Is there an infection?", ["No", "Yes"])  # No by default
 
     # If "Yes" is selected, show the multiselect for specific infections
     if infection_present == "Yes":
@@ -135,7 +140,7 @@ with col4:
 
     # Cerebrovascular/Neuro condition selectbox
     cerebrovascular_condition = st.selectbox("Is there a Cerebrovascular/Neuro condition?",
-                                             ["", "No", "Yes"])  # Empty by default
+                                             ["No", "Yes"])  # No by default
 
     # If "Yes" is selected, show the multiselect for specific conditions
     if cerebrovascular_condition == "Yes":
@@ -148,28 +153,29 @@ with col4:
 col5, col6 = st.columns(2)
 
 with col5:
-    dm = st.selectbox("Diabetes Mellitus (DM)", ("Yes", "No"), key="dm_input")
-    htn = st.selectbox("Hypertension (HTN)", ("Yes", "No"), key="htn_input")
-    ckd = st.selectbox("Chronic Kidney Disease (CKD)", ("Yes", "No"), key="ckd_input")  ## USED IN ICU ML
-    aki = st.selectbox("Acute Kidney Injury", ("Yes", "No"), key="aki_input")  ## USED IN ICU ML
-    ortho = st.selectbox("Orthostatic", ("Yes", "No"), key="ortho_input")
-    dvt = st.selectbox("Deep Venous Thrombosis", ("Yes", "No"), key="dvt_input")
-    pemb = st.selectbox("Pulmonary Embolism", ("Yes", "No"), key="pemb_input")
+    dm = st.selectbox("Diabetes Mellitus (DM)", ("No", "Yes"), key="dm_input")
+    htn = st.selectbox("Hypertension (HTN)", ("No", "Yes"), key="htn_input")
+    ckd = st.selectbox("Chronic Kidney Disease (CKD)", ("No", "Yes"), key="ckd_input")  ## USED IN ICU ML
+    aki = st.selectbox("Acute Kidney Injury", ("No", "Yes"), key="aki_input")  ## USED IN ICU ML
+    ortho = st.selectbox("Orthostatic", ("No", "Yes"), key="ortho_input")
+    dvt = st.selectbox("Deep Venous Thrombosis", ("No", "Yes"), key="dvt_input")
+    pemb = st.selectbox("Pulmonary Embolism", ("No", "Yes"), key="pemb_input")
 
 with col6:
-    ac_pain = st.selectbox("Atypical Chest Pain", ("Yes", "No"), key="acp_input")
-    cardiac_enzymes = st.selectbox("Raised Cardiac Enzymes", ("Yes", "No"), key="enzymes_input")  ## USED IN ICU ML
-    coronary_artery_disease = st.selectbox("Coronary Artery Disease", ("Yes", "No"), key="cad_input")
-    prior_cardiomyopathy = st.selectbox("Prior Cardiomyopathy", ("Yes", "No"), key="cm_input")  ## USED IN ICU ML
-    stable_angina = st.selectbox("Stable Angina", ("Yes", "No"), key="sa_input")
-    valvular_heart_disease = st.selectbox("Valvular Heart Disease", ("Yes", "No"), key="vhd_input")
-    congenital_heart_disease = st.selectbox("Congenital Heart Disease", ("Yes", "No"), key="chd_input")
+    ac_pain = st.selectbox("Atypical Chest Pain", ("No", "Yes"), key="acp_input")
+    cardiac_enzymes = st.selectbox("Raised Cardiac Enzymes", ("No", "Yes"), key="enzymes_input")  ## USED IN ICU ML
+    coronary_artery_disease = st.selectbox("Coronary Artery Disease", ("No", "Yes"), key="cad_input")
+    prior_cardiomyopathy = st.selectbox("Prior Cardiomyopathy", ("No", "Yes"), key="cm_input")  ## USED IN ICU ML
+    stable_angina = st.selectbox("Stable Angina", ("No", "Yes"), key="sa_input")
+    valvular_heart_disease = st.selectbox("Valvular Heart Disease", ("No", "Yes"), key="vhd_input")
+    congenital_heart_disease = st.selectbox("Congenital Heart Disease", ("No", "Yes"), key="chd_input")
 
 
 # Heading for the Lab Values section
 st.markdown("<h2 style='color: black;'>Lab Values</h2>", unsafe_allow_html=True)
-st.write("Lab units of measurement align with UCUM standards for interoperability and data exchange. You can change this directly in the field or via +/- buttons.")
+st.write("Lab units of measurement align with UCUM standards for interoperability and data exchange.")
 st.write("Use the **+** or **-** buttons to adjust the values, or type directly in the box for quicker input. Note: Pressing too quickly on **+** or **-** might reload the page, but you won't lose any other information already entered.")
+st.markdown("For unit conversions, you can use the [UCUM Web Tool](https://ucum.nlm.nih.gov/ucum-lhc/demo.html).")
 
 
 # Section 3: Lab Values (Collapsible)
