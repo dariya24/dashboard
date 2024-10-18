@@ -48,9 +48,9 @@ For our PRAIS project, we are focusing on utilizing predictive analytics to prov
 
 **References**  
 <br>
-<a href="https://www.kaggle.com/datasets/ashishsahani/hospital-admissions-data?select=HDHI+Admission+data.csv" target="_blank">Dataset - Hospital Admissions Data on Kaggle</a>  
-<br>
 <a href="https://www.herodmc.com/" target="_blank">Hero DMC Heart Institute Website</a>  
+<br>
+<a href="https://www.kaggle.com/datasets/ashishsahani/hospital-admissions-data?select=HDHI+Admission+data.csv" target="_blank">Dataset - Hospital Admissions Data on Kaggle</a>  
 """, unsafe_allow_html=True)
 
 # Add info button for extra details about the dataset
