@@ -290,7 +290,8 @@ elif subpopulation == "Age group":
 
 variables_to_remove = ["AgeGroup", "boolRural", "boolGender", "ICU_admission_status",'const','Duration_Label']
 risk_table.drop(labels=variables_to_remove, errors='ignore', inplace=True)
-risk_table.fillna(0, inplace=True)            
+risk_table.fillna(0, inplace=True)
+
 risk_table.reset_index(inplace=True)
 risk_table.rename(columns={'index': 'variable'}, inplace=True)
 risk_table = risk_table.round(1)
@@ -299,13 +300,14 @@ available_variables = risk_table['variable'].tolist()
 
 selected_variables = st.multiselect('Select variables to display in the table and bar chart', available_variables, default=available_variables)
 
+st.markdown("""
+Only statistically significant variables & bars are shown in the table and bar chart
+""")
+
 # Filter the risk_table based on the selected variables
 filtered_risk_table = risk_table[risk_table['variable'].isin(selected_variables)]
 
-st.markdown("""
-the NON-statistically significant variables & bars are not showing in the table and bar chart
-""")
-            
+
 # Display the filtered risk table
 st.dataframe(filtered_risk_table)
 
