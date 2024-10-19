@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from dashboard_libraries import get_pvalue_propotion, prepare_dataframe_for_descriptive_analytics
 import plotly.figure_factory as ff
+import plotly.express as px
+
 st.set_page_config(
     page_title="PRAIS - Descriptive",
     page_icon="❤",
@@ -104,22 +106,52 @@ with st.container():
     merged_df.drop(columns=['Total Unique Encounters'], inplace=True)
     st.table(data=merged_df.sort_values(by="Length of stay", ascending=False))
 
-    x1 = df[df["Length of stay"] == "Less than 7 days"].Age
-    x2 = df[df["Length of stay"] == "7 or more days"].Age
-    # Group data together
-    hist_data = [x1, x2]
+    # Plot age distribution
 
-    group_labels = ['Less than 7 days', '7 or more days']
+    grouped_df = subset.groupby(['Length of stay', "Age"]).agg({'MRD No.': pd.Series.nunique}).reset_index()
 
-    # Create distplot with custom bin_size
-    fig = ff.create_distplot(
-        hist_data, group_labels)
+    # Rename the column to 'Unique_Encuonters_Count'
+    grouped_df = grouped_df.rename(columns={'MRD No.': 'Number of Unique Encounters'})
 
-    # Add title
-    fig.update_layout(title_text='Age Distribution')
+    # Calculate total unique SNO for each Duration_Label
+    total_counts = subset.groupby('Length of stay')['MRD No.'].nunique().reset_index().rename(
+        columns={'MRD No.': 'Total Unique Encounters'})
 
-    # Plot!
+    # Merge with grouped data
+    merged_df = pd.merge(grouped_df, total_counts, on='Length of stay')
+
+    # Calculate proportion of each gender within every Duration_Label
+    merged_df['Proportion'] = merged_df['Number of Unique Encounters'] / merged_df['Total Unique Encounters']
+    merged_df['Proportion'] = merged_df['Proportion'].apply(lambda x: round(x * 100, 1))
+
+    merged_df.drop(columns=['Total Unique Encounters'], inplace=True)
+
+    fig = px.histogram(merged_df, x="Age", y="Proportion", color="Length of stay", marginal="box",
+                       color_discrete_sequence=['#8481DD', '#F6D173'],
+                       labels={"Age": "Age", 'Proportion': 'Percent of patients with this lab value'},
+                       hover_data=grouped_df.columns)
+    fig.update_layout(xaxis_title="Age", yaxis_title='Percent of patients with this age',
+                      title="{} Overview".format("Age"))
+    
+    # Plot
     st.plotly_chart(fig, use_container_width=True)
+
+# x1 = df[df["Length of stay"] == "Less than 7 days"].Age
+   # x2 = df[df["Length of stay"] == "7 or more days"].Age
+   # # Group data together
+   # hist_data = [x1, x2]
+#
+   # group_labels = ['Less than 7 days', '7 or more days']
+#
+   # # Create distplot with custom bin_size
+   # fig = ff.create_distplot(
+   #     hist_data, group_labels)
+#
+   # # Add title
+   # fig.update_layout(title_text='Age Distribution')
+#
+   # # Plot!
+   # st.plotly_chart(fig, use_container_width=True)
     #subset.pivot(columns='Length of stay', values="Age").plot.hist(alpha=0.5, title="Age Distribution", bins=50)
     #st.pyplot(plt)
 
@@ -193,24 +225,62 @@ st.write("Mean {} laboratory test value: {:.1f}".format(option, mean_value))
 st.write("Median {} laboratory test value: {:.1f}".format(option, median_value))
 
 
-x1 = subset[subset["Length of stay"] == "Less than 7 days"][option]
-x2 = subset[subset["Length of stay"] == "7 or more days"][option]
-# Group data together
-hist_data = [x1, x2]
+st.subheader("Mean laboratory results based on the length of stay")
 
-group_labels = ['Less than 7 days', '7 or more days']
+mean_stats = subset.groupby("Length of stay")[option].mean().reset_index()
+mean_stats.rename(columns={option: 'Mean value of {}'.format(option)})
+st.table(data=mean_stats.sort_values(by="Length of stay", ascending=False))
 
-# Create distplot with custom bin_size
-fig = ff.create_distplot(
-    hist_data, group_labels, bin_size=[0.5, 0.5])
+st.subheader("Laboratory results distributions overview")
 
-# Add title
-fig.update_layout(title_text='{} Distribution'.format(option))
 
-# Plot!
+#x1 = subset[subset["Length of stay"] == "Less than 7 days"][option]
+#x2 = subset[subset["Length of stay"] == "7 or more days"][option]
+## Group data together
+#hist_data = [x1, x2]
+#
+#group_labels = ['Less than 7 days', '7 or more days']
+#
+## Create distplot with custom bin_size
+#fig = ff.create_distplot(
+#    hist_data, group_labels, bin_size=[0.5, 0.5])
+#
+## Add title
+#fig.update_layout(title_text='{} Distribution'.format(option))
+#
+## Plot!
+#st.plotly_chart(fig, use_container_width=True)
+
+
+
+
+grouped_df = subset.groupby(['Length of stay', option]).agg({'MRD No.': pd.Series.nunique}).reset_index()
+
+# Rename the column to 'Unique_Encuonters_Count'
+grouped_df = grouped_df.rename(columns={'MRD No.': 'Number of Unique Encounters'})
+
+# Calculate total unique SNO for each Duration_Label
+total_counts = subset.groupby('Length of stay')['MRD No.'].nunique().reset_index().rename(
+    columns={'MRD No.': 'Total Unique Encounters'})
+
+# Merge with grouped data
+merged_df = pd.merge(grouped_df, total_counts, on='Length of stay')
+
+# Calculate proportion of each gender within every Duration_Label
+merged_df['Proportion'] = merged_df['Number of Unique Encounters'] / merged_df['Total Unique Encounters']
+merged_df['Proportion'] = merged_df['Proportion'].apply(lambda x: round(x * 100, 1))
+
+merged_df.drop(columns=['Total Unique Encounters'], inplace=True)
+
+
+fig = px.histogram(merged_df, x=option, y="Proportion", color="Length of stay", marginal="box",
+                   color_discrete_sequence=['#8481DD', '#F6D173'],
+                   labels={option: option, 'Proportion': 'Percent of patients with this lab value'},
+                   hover_data=grouped_df.columns)
+fig.update_layout(xaxis_title =option, yaxis_title='Percent of patients with this lab value', title="{} Overview".format(option))
+
+# Plot
 st.plotly_chart(fig, use_container_width=True)
-
-
 
 #col1, col2 = st.columns(2)
 

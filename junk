@@ -1,0 +1,11 @@
+!!!!!!!!! RED DICT {1: {'const': {'p_value': 0.0021750255712888623, 'odds_ratio': 0.14401228169749686}, 'boolGender': {'p_value': 0.1142022981684025, 'odds_ratio': 0.8229553818629665}, 'AGE': {'p_value': 0.69562
+16429485946, 'odds_ratio': 1.0031593869705253}, 'Haemoglobin': {'p_value': 0.2678503623805355, 'odds_ratio': 0.9720298287960282}, 'TOTAL LEUKOCYTES COUNT': {'p_value': 0.3438130527056702, 'odds_ratio': 1.0084328
+250634058}, 'PLATELETS': {'p_value': 0.8425598333945856, 'odds_ratio': 0.9998868730542145}, 'GLUCOSE': {'p_value': 2.0474382686151704e-06, 'odds_ratio': 1.0033458454351991}, 'UREA': {'p_value': 0.031043328916697
+525, 'odds_ratio': 1.0043141604330252}, 'CREATININE': {'p_value': 0.8013293334629201, 'odds_ratio': 0.9832899026754288}, 'B-TYPE NATRIURETIC PEPTIDE': {'p_value': 0.0006297953577074665, 'odds_ratio': 1.000214105
+568575}, 'Ejection Fraction': {'p_value': 0.47745041257804655, 'odds_ratio': 1.0031762317488582}, 'AgeGroup': {'p_value': 0.6246978620496724, 'odds_ratio': 0.9120565104031251}, 'ICU_admission_status': {'p_value'
+: 8.586216701066779e-08, 'odds_ratio': 3.7611502720331793}}, 0: {'const': {'p_value': 3.6497744170299275e-13, 'odds_ratio': 0.07789916475136716}, 'boolGender': {'p_value': 0.02343300328429404, 'odds_ratio': 0.86
+57665256223771}, 'AGE': {'p_value': 0.018840100239482627, 'odds_ratio': 1.0102556811532302}, 'Haemoglobin': {'p_value': 0.019836901829111055, 'odds_ratio': 0.9664500010176802}, 'TOTAL LEUKOCYTES COUNT': {'p_valu
+e': 0.0006235431510009842, 'odds_ratio': 1.0165699307381284}, 'PLATELETS': {'p_value': 0.04755945126649892, 'odds_ratio': 1.0005803604431338}, 'GLUCOSE': {'p_value': 0.00032522298381150813, 'odds_ratio': 1.00121
+81607946908}, 'UREA': {'p_value': 0.32556054633094544, 'odds_ratio': 1.0010067744518394}, 'CREATININE': {'p_value': 0.014471261420432861, 'odds_ratio': 1.0970395016055485}, 'B-TYPE NATRIURETIC PEPTIDE': {'p_valu
+e': 5.401120730252235e-09, 'odds_ratio': 1.0001994773198313}, 'Ejection Fraction': {'p_value': 0.09925655865608748, 'odds_ratio': 0.9960404647757388}, 'AgeGroup': {'p_value': 0.24610371054882318, 'odds_ratio': 1
+.1230311874732897}, 'ICU_admission_status': {'p_value': 4.605995221901506e-20, 'odds_ratio': 3.426695821185173}}}
