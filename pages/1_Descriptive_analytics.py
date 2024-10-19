@@ -132,7 +132,7 @@ with st.container():
                        hover_data=grouped_df.columns)
     fig.update_layout(xaxis_title="Age", yaxis_title='Percent of patients with this age',
                       title="{} Overview".format("Age"))
-    
+
     # Plot
     st.plotly_chart(fig, use_container_width=True)
 
