@@ -31,3 +31,4 @@ plt.ylabel('Frequency')
 
 # Show the plot in Streamlit
 st.pyplot(plt)
+
