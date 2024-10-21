@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from run_ML import get_ICU_ML_Prediction
+from run_ML import get_duration_label
 
 st.set_page_config(
     page_title="PRAIS - About",
@@ -178,6 +179,7 @@ with col4:
             "Select the type of infection:",
             ["Urinary Tract Infection (UTI)", "Infective Endocarditis", "Chest Infection"]
         )
+    else: selected_infections = "No"
 
     # Cerebrovascular/Neuro condition selectbox
     cerebrovascular_condition = st.selectbox("Is there a Cerebrovascular/Neuro condition?",
@@ -189,6 +191,7 @@ with col4:
             "Select the type of condition:",
             ["Cerebrovascular Accident Infarct", "Cerebrovascular Accident Bleed", "Neuro Cardiogenic Syncope"]
         )
+    else: selected_conditions_neuro = "No"
 
 # Additional Selectboxes (same treatment for defaults)
 col5, col6 = st.columns(2)
@@ -270,6 +273,17 @@ if st.button("Predict", key="predict_button"):
         'Urea': [urea],  # -- used in ICU ML
         'Creatinine': [crea],  # -- used in ICU ML
         'Pulmonary Embolism': ['Yes' if 'Pulmonary Embolism' in selected_conditions_ecg else 'No'],
+        'Coronary Artery Disease': [coronary_artery_disease],
+        'Cerebrovascular Accident INFRACT':['Yes' if 'Cerebrovascular Accident Infarct' in selected_conditions_neuro else 'No'],
+        'Urinary tract infection': ['Yes' if 'Urinary Tract Infection (UTI)' in selected_infections else 'No'],
+        'NEURO CARDIOGENIC SYNCOPE': ['Yes' if 'Neuro Cardiogenic Syncope' in selected_conditions_neuro else 'No'],
+        'ORTHOSTATIC' : [ortho],
+        'INFECTIVE ENDOCARDITIS':['Yes' if 'Infective Endocarditis' in selected_infections else 'No' ],
+        'Deep venous thrombosis': [dvt],
+        'CHEST INFECTION': ['Yes' if "Chest Infection" in selected_infections else 'No'],
+        
+
+
 
         'PSVT': ['Yes' if 'PSVT' in selected_conditions_ecg else 'No'],
 
@@ -306,20 +320,24 @@ if st.button("Predict", key="predict_button"):
     st.write(input_data)
 
     prediction_result, data = get_ICU_ML_Prediction(input_data)
+    predicted_output = get_duration_label(input_data)
 
     st.write("Collected Input Data for ML")
     st.write(data)
-
     if prediction_result == 1:
         prediction_icu = "Yes"
     else:
         prediction_icu = "No"
 
     # Placeholder for prediction model (replace with actual model code)
-    prediction_long_term = "Yes"  # Dummy result for long-term stay prediction
+    if predicted_output == 1:
+        prediction_dur = "Yes"
+    else:
+        prediction_dur = "No"  # Dummy result for long-term stay prediction
 
     # Display the predictions
+    
     st.subheader("Prediction Results:")
-    st.write(f"Long-term stay (7+ days): {prediction_long_term}")
+    st.write(f"Long-term stay (7+ days): {prediction_dur}")
     st.write(f"ICU admission: {prediction_icu}")
 
