@@ -1,9 +1,19 @@
 import streamlit as st
+#from styles import apply_custom_css
+#import sys
+#import os
 
 st.set_page_config(
     page_title="PRAIS - About",
     page_icon="❤",
 )
+
+# Get the parent directory (where dashboard is located)
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# Custom styles for hovering over tabs
+#st.markdown(apply_custom_css(), unsafe_allow_html=True)
+
 
 # Sidebar background with reduced opacity for image only
 sidebar_bg = '''
@@ -44,7 +54,9 @@ st.markdown("""
 ## Welcome to MediPredict
 We are a group of health informatics students comprised of passionate data scientists and healthcare professionals working together to develop innovative solutions in medical prediction and analytics.
 
-For our PRAIS project, we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions that might be of use for hospital managers and clinical coordinators within healthcare for optimizing care strategies and improving patient outcomes.
+### Project description and objectives
+
+For our PRAIS project, we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions and our aim is that this would be of use for hospital managers and clinical coordinators within healthcare for optimizing care strategies and improving patient outcomes.
 
 **References**  
 <a href="https://www.herodmc.com/" target="_blank">Hero DMC Heart Institute Website</a>  
