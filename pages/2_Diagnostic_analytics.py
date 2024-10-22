@@ -332,6 +332,7 @@ elif subpopulation == "Age group":
 
 variables_to_remove = ["AgeGroup", "boolRural", "boolGender", "ICU_admission_status",'const','Duration_Label']
 risk_table.drop(labels=variables_to_remove, errors='ignore', inplace=True)
+#risk_table.fillna(0, inplace=True)
 
 risk_table.reset_index(inplace=True)
 risk_table.rename(columns={'index': 'variable'}, inplace=True)
@@ -339,7 +340,7 @@ risk_table = risk_table.round(1)
 
 available_variables = risk_table['variable'].tolist()
 
-selected_variables = st.multiselect('Select variables to display in the table and bar chart', available_variables, default=available_variables)
+selected_variables = st.multiselect('Select variables to display in the table and bar chart', available_variables, default =[])
 
 st.markdown("""
 Only statistically significant variables & bars are shown in the table and bar chart
@@ -347,6 +348,9 @@ Only statistically significant variables & bars are shown in the table and bar c
 
 # Filter the risk_table based on the selected variables
 filtered_risk_table = risk_table[risk_table['variable'].isin(selected_variables)]
+
+
+filtered_risk_table["variable"] = filtered_risk_table["variable"].apply(lambda x: x.lower().title())
 
 # This line fills table with 0 in place of None.
 #risk_table.fillna(0, inplace=True)
@@ -396,4 +400,5 @@ st.plotly_chart(fig, use_container_width=True)
 #st.bar_chart(risk_table, horizontal= True, stack=False, x_label= 'odd ratio')
 
 #st.dataframe(risk_table)
+
 

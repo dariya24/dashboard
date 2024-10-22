@@ -93,7 +93,10 @@ st.markdown(sidebar_bg, unsafe_allow_html=True)
 
 
 
-df = pd.read_csv("data/HDHI_Admission_data_post_processed.csv")
+#df = pd.read_csv("data/HDHI_Admission_data_post_processed.csv")
+
+df = pd.read_csv("data/241019_Latest_Dataset_PostProcessing.csv")
+
 
 df = prepare_dataframe_for_descriptive_analytics(df)
 
@@ -111,15 +114,15 @@ with st.container():
         subset = df
 
 
-    # Group by 'Duration_Label' and 'GENDER' and count unique 'SNO'
-    grouped_df = subset.groupby(['Length of stay', 'Gender']).agg({'SNO': pd.Series.nunique}).reset_index()
+    # Group by 'Duration_Label' and 'GENDER' and count unique 'MRD No.'
+    grouped_df = subset.groupby(['Length of stay', 'Gender']).agg({'MRD No.': pd.Series.nunique}).reset_index()
 
     # Rename the column to 'Unique_Encuonters_Count'
-    grouped_df = grouped_df.rename(columns={'SNO': 'Number of Unique Encounters'})
+    grouped_df = grouped_df.rename(columns={'MRD No.': 'Number of Unique Encounters'})
 
-    # Calculate total unique SNO for each Duration_Label
-    total_counts = subset.groupby('Length of stay')['SNO'].nunique().reset_index().rename(
-        columns={'SNO': 'Total Unique Encounters'})
+    # Calculate total unique MRD No. for each Duration_Label
+    total_counts = subset.groupby('Length of stay')['MRD No.'].nunique().reset_index().rename(
+        columns={'MRD No.': 'Total Unique Encounters'})
 
     # Merge with grouped data
     merged_df = pd.merge(grouped_df, total_counts, on='Length of stay')
@@ -132,15 +135,15 @@ with st.container():
     st.table(data=merged_df.sort_values(by="Length of stay", ascending=False))
 
 
-    # Group by 'Duration_Label' and 'Rural or urban' and count unique 'SNO'
-    grouped_df = subset.groupby(['Length of stay', 'Rural or Urban']).agg({'SNO': pd.Series.nunique}).reset_index()
+    # Group by 'Duration_Label' and 'Rural or urban' and count unique 'MRD No.'
+    grouped_df = subset.groupby(['Length of stay', 'Rural or Urban']).agg({'MRD No.': pd.Series.nunique}).reset_index()
 
     # Rename the column to 'Unique_Encuonters_Count'
-    grouped_df = grouped_df.rename(columns={'SNO': 'Number of Unique Encounters'})
+    grouped_df = grouped_df.rename(columns={'MRD No.': 'Number of Unique Encounters'})
 
-    # Calculate total unique SNO for each Duration_Label
-    total_counts = subset.groupby('Length of stay')['SNO'].nunique().reset_index().rename(
-        columns={'SNO': 'Total Unique Encounters'})
+    # Calculate total unique MRD No. for each Duration_Label
+    total_counts = subset.groupby('Length of stay')['MRD No.'].nunique().reset_index().rename(
+        columns={'MRD No.': 'Total Unique Encounters'})
 
     # Merge with grouped data
     merged_df = pd.merge(grouped_df, total_counts, on='Length of stay')
@@ -160,7 +163,7 @@ with st.container():
     # Rename the column to 'Unique_Encuonters_Count'
     grouped_df = grouped_df.rename(columns={'MRD No.': 'Number of Unique Encounters'})
 
-    # Calculate total unique SNO for each Duration_Label
+    # Calculate total unique MRD No. for each Duration_Label
     total_counts = subset.groupby('Length of stay')['MRD No.'].nunique().reset_index().rename(
         columns={'MRD No.': 'Total Unique Encounters'})
 
@@ -203,7 +206,8 @@ with st.container():
     #st.pyplot(plt)
 
 
-st.header("Laboratory results")
+st.markdown("<h1 style='color: purple;'>Laboratory results</h1>", unsafe_allow_html=True)
+
 
 st.write("In this section the investigation of the laboratory tests results for various patient subgroups can be investigated")
 
@@ -259,8 +263,8 @@ else:
 subset = subset3
 subset.dropna(inplace=True)
 
-number_encounters = subset.SNO.nunique()
-total_number_encounters = df.SNO.nunique()
+number_encounters = subset["MRD No."].nunique()
+total_number_encounters = df["MRD No."].nunique()
 mean_value = subset[option].mean()
 median_value = subset[option].median()
 
@@ -306,7 +310,7 @@ grouped_df = subset.groupby(['Length of stay', option]).agg({'MRD No.': pd.Serie
 # Rename the column to 'Unique_Encuonters_Count'
 grouped_df = grouped_df.rename(columns={'MRD No.': 'Number of Unique Encounters'})
 
-# Calculate total unique SNO for each Duration_Label
+# Calculate total unique ["MRD No."]. for each Duration_Label
 total_counts = subset.groupby('Length of stay')['MRD No.'].nunique().reset_index().rename(
     columns={'MRD No.': 'Total Unique Encounters'})
 
@@ -347,7 +351,8 @@ st.plotly_chart(fig, use_container_width=True)
 #    st.write("Reference value for: {}".format(option))
 #    st.table(data=reference_values)
 
-st.header("Comorbidities")
+st.markdown("<h1 style='color: purple;'>Comorbidities</h1>", unsafe_allow_html=True)
+
 st.write("In this section the investigation of the comorbidities for various patient subgroups can be investigated")
 
 with st.container():
@@ -389,11 +394,11 @@ with st.container():
     st.subheader("Comparison of {} for different length of stay".format(option))
 
     a = subset.groupby("Length of stay")[option].sum().reset_index()
-    b = subset.groupby("Length of stay").SNO.count()
+    b = subset.groupby("Length of stay")["MRD No."].count()
     x = pd.merge(a, b, on="Length of stay")
-    x["Proportion"] = (x[option] / x['SNO']) * 100
+    x["Proportion"] = (x[option] / x["MRD No."]) * 100
     x["Proportion"] = x["Proportion"].apply(lambda x: "{}%".format(round(x)))
-    x.drop(columns={"SNO"}, inplace=True)
+    x.drop(columns={"MRD No."}, inplace=True)
 
     x.rename(columns={option: "Number of patients with {}".format(option)}, inplace=True)
 
@@ -405,11 +410,11 @@ with st.container():
     st.subheader("Comparison of {} for different ICU Admission".format(option))
 
     a = subset.groupby("ICU_admission_status")[option].sum().reset_index()
-    b = subset.groupby("ICU_admission_status").SNO.count()
+    b = subset.groupby("ICU_admission_status")["MRD No."].count()
     x = pd.merge(a, b, on="ICU_admission_status")
-    x["Proportion"] = (x[option] / x['SNO']) * 100
+    x["Proportion"] = (x[option] / x['MRD No.']) * 100
     x["Proportion"] = x["Proportion"].apply(lambda x: "{}%".format(round(x)))
-    x.drop(columns={"SNO"}, inplace=True)
+    x.drop(columns={"MRD No."}, inplace=True)
 
     x["ICU_admission_status"] = x["ICU_admission_status"].apply(lambda x: "Admitted to ICU" if x == 1 else "Not admitted to ICU")
     x.rename(columns={"ICU_admission_status": "ICU Admission Status"})
