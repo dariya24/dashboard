@@ -319,11 +319,14 @@ if st.button("Predict", key="predict_button"):
     st.write("Collected Input Data:")
     st.write(input_data)
 
-    prediction_result, data = get_ICU_ML_Prediction(input_data)
-    predicted_output = get_duration_label(input_data)
+    #prediction_result, data = get_ICU_ML_Prediction(input_data)
+    #predicted_output = get_duration_label(input_data)
+
+    prediction_result = 1
+    predicted_output = 0
 
     st.write("Collected Input Data for ML")
-    st.write(data)
+    #st.write(data)
     if prediction_result == 1:
         prediction_icu = "Yes"
     else:
