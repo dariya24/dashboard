@@ -370,4 +370,4 @@ if st.button("Predict", key="predict_button"):
           This happens, because random forest doesn't directly predict class labels, but outputs the probability of each class.\
           The final predicted class is based on the highest probability.\\
           **Baseline value - E[f(x)] - The average prediction of the model over all instances (without any specific feature contribution).\
-          Note that for ICU Admission model the baseline value is very 0.825 caused by the imbalanced dataset""")
+          Note that for ICU Admission model the baseline value is very high - 0.825 - caused by the imbalanced dataset""")
