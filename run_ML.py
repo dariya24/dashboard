@@ -1,6 +1,11 @@
 import pandas as pd
 import pickle
 
+import shap
+import numpy as np
+import matplotlib.pyplot as plt
+
+
 def normalize_dataframe(df, columns, norm_columns):
     filename = 'assets/models/241017_MinMaxScaler.sav'
     min_max_scaler = pickle.load(open(filename, 'rb'))
@@ -146,5 +151,29 @@ def get_duration_label (input_data):
            
 
 
+def get_SHAP_Plot(row, filename):
 
 
+
+
+    model = pickle.load(open(filename, 'rb'))
+    # Create a TreeExplainer for the uploaded Random Forest model
+    explainer = shap.TreeExplainer(model)
+    cols = list(row[0:1].columns)
+    new_instance = np.array(row[0:1])
+
+    # Calculate SHAP values for a single instance (e.g., the first instance in the test set)
+    shap_values = explainer.shap_values(new_instance)
+
+    # Create the waterfall plot using matplotlib
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    shap.waterfall_plot(shap.Explanation(values=shap_values[1][0],
+                                         base_values=explainer.expected_value[1],
+                                         data=new_instance[0],
+                                         feature_names=cols), show=False)
+
+
+
+
+    return fig

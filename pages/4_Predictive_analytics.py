@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-from run_ML import get_ICU_ML_Prediction
-from run_ML import get_duration_label
+from run_ML import get_ICU_ML_Prediction, get_duration_label, get_SHAP_Plot
 
 st.set_page_config(
     page_title="PRAIS - About",
@@ -319,21 +318,20 @@ if st.button("Predict", key="predict_button"):
     st.write("Collected Input Data:")
     st.write(input_data)
 
-    #prediction_result, data = get_ICU_ML_Prediction(input_data)
-    #predicted_output = get_duration_label(input_data)
+    prediction_result_icu, data_icu = get_ICU_ML_Prediction(input_data)
+    prediction_result_duration, data_duration = get_duration_label(input_data)
 
-    prediction_result = 1
-    predicted_output = 0
+    #prediction_result_icu = 1
+    #prediction_result_duration = 0
 
-    st.write("Collected Input Data for ML")
-    #st.write(data)
-    if prediction_result == 1:
+
+    if prediction_result_icu == 1:
         prediction_icu = "Yes"
     else:
         prediction_icu = "No"
 
     # Placeholder for prediction model (replace with actual model code)
-    if predicted_output == 1:
+    if prediction_result_duration == 1:
         prediction_dur = "Yes"
     else:
         prediction_dur = "No"  # Dummy result for long-term stay prediction
@@ -344,3 +342,32 @@ if st.button("Predict", key="predict_button"):
     st.write(f"Long-term stay (7+ days): {prediction_dur}")
     st.write(f"ICU admission: {prediction_icu}")
 
+    # Section 3: Lab Values (Collapsible)
+    with st.expander("Expand to see SHAP Interpretation"):
+
+        st.markdown("""**SHAP (SHapley Additive exPlanations)** values are a method to explain the output of machine learning models.
+        SHAP assumes that the prediction for an instance is the sum of the contributions of each feature plus a baseline value (expected prediction)
+        Therefore, each SHAP value quantifies how much a feature of an instance contributes to a model's prediction* assuming the following: 
+        \nModel Performance = Baseline Value** + $$\sum$$(SHAP Values of Features)
+        \n
+        """)
+
+
+
+
+        st.subheader("SHAP Waterfall plot for Length of Stay Model")
+        duration_model =  'assets/models//fitted_RF_model.pkl'
+        fig1 = get_SHAP_Plot(data_duration, duration_model)
+        st.pyplot(fig1)
+
+        st.subheader("SHAP Waterfall plot for ICU Admission Model")
+        icu_model = 'assets/models/241017_random_forest_ICU.sav'
+        fig2 = get_SHAP_Plot(data_icu, icu_model)
+        ## Display the plot in Streamlit
+        st.pyplot(fig2)
+
+        st.markdown("""*Note that the output of the model in the plot  - f(x) - is not class label 1/0, but a probability of a class being "1".\
+          This happens, because random forest doesn't directly predict class labels, but outputs the probability of each class.\
+          The final predicted class is based on the highest probability.\\
+          **Baseline value - E[f(x)] - The average prediction of the model over all instances (without any specific feature contribution).\
+          Note that for ICU Admission model the baseline value is very 0.825 caused by the imbalanced dataset""")
