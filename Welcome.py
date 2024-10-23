@@ -6,27 +6,32 @@ st.set_page_config(
     page_icon="❤️",
 )
 
-# Inject CSS to set the background image for the main content and change text color
+# Inject CSS to position the background image in the top-right corner
 background_image_css = '''
 <style>
-/* Set the main app background with the image */
-[data-testid="stAppViewContainer"] > .main {
-    background: url("https://img.goodfon.com/original/1920x1200/2/d1/badfon-taj-mahal-india-sunrise.jpg");
-    background-size: cover; /* Ensure the background covers the entire page */
-    background-position: center;
-    background-repeat: no-repeat;
-    color: white; /* Make the text white */
-}
-
-/* Keep the PRAIS title purple */
-h1 {
-    color: purple !important;
+/* Set the image in the top-right corner */
+.top-right-image {
+    position: absolute;
+    top: 400px;
+    right: 0px;
+    width: 200px; /* Adjust the size of the image */
+    height: auto;
+    z-index: 1000; /* Ensure the image stays on top of other elements */
+    padding: 10px; /* Add padding to create more space around the image */
 }
 </style>
 '''
 
-# Inject the CSS for the background image and text color change
+# Inject the CSS and HTML for the top-right image
 st.markdown(background_image_css, unsafe_allow_html=True)
+
+# Add the image in the top-right corner
+st.markdown(
+    '''
+    <img src="https://img.goodfon.com/original/1920x1200/2/d1/badfon-taj-mahal-india-sunrise.jpg" class="top-right-image">
+    ''',
+    unsafe_allow_html=True
+)
 
 # Sidebar background with reduced opacity for image only
 sidebar_bg = '''

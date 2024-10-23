@@ -7,10 +7,52 @@ from collections import defaultdict
 import statsmodels.formula.api as smf
 import plotly.express as px
 
+
 st.set_page_config(
     page_title="PRAIS - Diagnostic",
     page_icon="❤",
 )
+
+# Injecting custom CSS to change the background color of the input fields to soft purple (#f0d7f2)
+custom_css = '''
+<style>
+    /* Input fields such as number inputs and text inputs */
+    input {
+        background-color: #f0d7f2 !important;  /* Light purple background for input fields */
+        border-radius: 5px !important;  /* Optional: Adds a slight border radius for a softer look */
+        padding: 5px !important;  /* Optional: Adds padding inside the input fields */
+    }
+
+    /* Dropdown fields (select boxes) */
+    select {
+        background-color: #f0d7f2 !important;  /* Light purple background for select boxes */
+        border-radius: 5px !important;  /* Optional: Adds a slight border radius for a softer look */
+        padding: 5px !important;  /* Optional: Adds padding inside the select boxes */
+    }
+    
+    /* Ensures number inputs are also styled correctly */
+    [data-testid="stNumberInput"] > div > input {
+        background-color: #f0d7f2 !important;
+        border-radius: 5px !important;
+        padding: 5px !important;
+    }
+
+    /* Ensures selectboxes are styled */
+    [data-testid="stSelectbox"] > div > div {
+        background-color: #f0d7f2 !important;
+        border-radius: 5px !important;
+    }
+
+    /* Ensures multiselect boxes are styled */
+    [data-testid="stMultiSelect"] > div > div {
+        background-color: #f0d7f2 !important;
+        border-radius: 5px !important;
+    }
+</style>
+'''
+
+# Injecting the custom CSS into the Streamlit app
+st.markdown(custom_css, unsafe_allow_html=True)
 
 # Sidebar background with reduced opacity for image only
 sidebar_bg = '''
@@ -290,6 +332,7 @@ elif subpopulation == "Age group":
 
 variables_to_remove = ["AgeGroup", "boolRural", "boolGender", "ICU_admission_status",'const','Duration_Label']
 risk_table.drop(labels=variables_to_remove, errors='ignore', inplace=True)
+#risk_table.fillna(0, inplace=True)
 
 risk_table.reset_index(inplace=True)
 risk_table.rename(columns={'index': 'variable'}, inplace=True)
@@ -297,7 +340,7 @@ risk_table = risk_table.round(1)
 
 available_variables = risk_table['variable'].tolist()
 
-selected_variables = st.multiselect('Select variables to display in the table and bar chart', available_variables, default=available_variables)
+selected_variables = st.multiselect('Select variables to display in the table and bar chart', available_variables, default =[])
 
 st.markdown("""
 Only statistically significant variables & bars are shown in the table and bar chart
@@ -357,4 +400,5 @@ st.plotly_chart(fig, use_container_width=True)
 #st.bar_chart(risk_table, horizontal= True, stack=False, x_label= 'odd ratio')
 
 #st.dataframe(risk_table)
+
 

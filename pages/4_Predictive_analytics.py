@@ -2,10 +2,13 @@ import streamlit as st
 import pandas as pd
 from run_ML import get_ICU_ML_Prediction, get_duration_label, get_SHAP_Plot
 
+
 st.set_page_config(
     page_title="PRAIS - About",
     page_icon="❤",
 )
+
+
 # Inject custom CSS to change the background color of the input fields to #f0d7f2
 custom_css = '''
 <style>
