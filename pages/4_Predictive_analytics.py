@@ -339,8 +339,8 @@ if st.button("Predict", key="predict_button"):
     # Display the predictions
     
     st.subheader("Prediction Results:")
-    st.write(f"Long-term stay (7+ days): {prediction_dur}")
-    st.write(f"ICU admission: {prediction_icu}")
+    st.markdown(f"**Long-term stay (7+ days)**: {prediction_dur}")
+    st.markdown(f"**ICU admission**: {prediction_icu}")
 
     # Section 3: Lab Values (Collapsible)
     with st.expander("Expand to see SHAP Interpretation"):
@@ -351,9 +351,6 @@ if st.button("Predict", key="predict_button"):
         \nModel Performance = Baseline Value** + $$\sum$$(SHAP Values of Features)
         \n
         """)
-
-
-
 
         st.subheader("SHAP Waterfall plot for Length of Stay Model")
         duration_model =  'assets/models//fitted_RF_model.pkl'
