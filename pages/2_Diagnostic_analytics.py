@@ -340,7 +340,7 @@ risk_table = risk_table.round(1)
 
 available_variables = risk_table['variable'].tolist()
 
-selected_variables = st.multiselect('Select variables to display in the table and bar chart', available_variables, default =[])
+selected_variables = st.multiselect('Select variables to display in the table and bar chart', available_variables, default =available_variables)
 
 st.markdown("""
 Only statistically significant variables & bars are shown in the table and bar chart
