@@ -87,18 +87,18 @@ sidebar_bg = '''
 st.markdown(sidebar_bg, unsafe_allow_html=True)
 
 #data preprocessing
-df = pd.read_csv("data/HDHI_Admission_data_post_processed.csv")
+df = pd.read_csv("data/LATEST_241007_post_processed_no_duplicates.csv")
 age_group_mapping = {
 '<18': 1, '18 - 35': 2,'36 - 65': 3,'>65':4 
 }
 
-df_binary = df.drop(['Unnamed: 0','SNO', 'MRD No.', 'D.O.A', 'D.O.D', 'AGE', 'GENDER','RURAL','DURATION OF STAY','duration of intensive unit stay', 'OUTCOME','month year','Haemoglobin','TOTAL LEUKOCYTES COUNT','PLATELETS','GLUCOSE','UREA','CREATININE','B-TYPE NATRIURETIC PEPTIDE','Ejection Fraction'], axis=1)
+df_binary = df.drop(['MRD No.', 'D.O.A', 'D.O.D', 'AGE', 'GENDER','RURAL','DURATION OF STAY','duration of intensive unit stay', 'OUTCOME','month year','Haemoglobin','TOTAL LEUKOCYTES COUNT','PLATELETS','GLUCOSE','UREA','CREATININE'], axis=1)
 df_binary.dropna(axis=0, inplace=True)
 df_binary['Duration_Label'] = df_binary['Duration_Label'].map({'LT7': 0, 'GE7': 1})
 df_binary['AgeGroup']=df_binary['AgeGroup'].map(age_group_mapping)
 df_binary['TYPE OF ADMISSION-EMERGENCY/OPD'] = df_binary['TYPE OF ADMISSION-EMERGENCY/OPD'].map({'E': 0, 'O': 1})
 
-df_continue = df[['Duration_Label','boolGender','boolRural', 'AGE', 'Haemoglobin', 'TOTAL LEUKOCYTES COUNT', 'PLATELETS', 'GLUCOSE', 'UREA', 'CREATININE', 'B-TYPE NATRIURETIC PEPTIDE', 'Ejection Fraction','AgeGroup','ICU_admission_status']]
+df_continue = df[['Duration_Label','boolGender','boolRural', 'AGE', 'Haemoglobin', 'TOTAL LEUKOCYTES COUNT', 'PLATELETS', 'GLUCOSE', 'UREA', 'CREATININE', 'AgeGroup','ICU_admission_status']]
 df_continue.dropna(axis=0, inplace=True)
 df_continue['AgeGroup']=df_continue['AgeGroup'].map(age_group_mapping)
 df_continue['Duration_Label'] = df_continue['Duration_Label'].map({'LT7': 0, 'GE7': 1})

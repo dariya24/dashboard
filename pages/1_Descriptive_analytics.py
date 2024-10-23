@@ -95,7 +95,7 @@ st.markdown(sidebar_bg, unsafe_allow_html=True)
 
 #df = pd.read_csv("data/HDHI_Admission_data_post_processed.csv")
 
-df = pd.read_csv("data/241019_Latest_Dataset_PostProcessing.csv")
+df = pd.read_csv("data/LATEST_241007_post_processed_no_duplicates.csv")
 
 
 df = prepare_dataframe_for_descriptive_analytics(df)
