@@ -114,7 +114,7 @@ sidebar_bg = '''
     background-position: center;
     background-repeat: no-repeat;
     position: absolute;
-    top: 0;
+    top: 50px;
     right: 0;
     bottom: 0;
     left: 0;
