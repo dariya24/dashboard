@@ -90,15 +90,16 @@ def age_class(age):
         age_group = 4  
     return age_group
 
-def normalize_data_dur(df, columns, norm_columns):
-    filepath = 'assets/models/fitted_scaler.pkl'
+def normalize_data_dur(df, columns):
+    filepath = 'assets/models/fitted_scaler_2.pkl'
     with open(filepath, 'rb') as file:
        loaded_scaler = pickle.load(file)
-       normalized = pd.DataFrame(loaded_scaler.transform(df[columns]),
-                         columns=norm_columns)
-
-       FINAL_data_ML = pd.concat([df, normalized], axis=1)
-    return FINAL_data_ML
+       df[columns] = pd.DataFrame(
+       loaded_scaler.transform(df[columns]),
+       columns=columns,
+       index=df.index
+)
+    return df
             
 def get_duration_label (input_data):
       
@@ -137,9 +138,7 @@ def get_duration_label (input_data):
       input_data_dur["AgeGroup"] = input_data['Age'].apply(lambda x: age_class(x))
 
       columns_to_norm = ['TOTAL LEUKOCYTES COUNT','GLUCOSE','UREA','Haemoglobin']
-      norm_columns = ["{}_Norm".format(c) for c in columns_to_norm]
-      
-      normalized = normalize_data_dur(input_data_dur, columns_to_norm, norm_columns)
+      normalized = normalize_data_dur(input_data_dur, columns_to_norm)
       print(normalized)
 
       final = normalized[['Coronary Artery Disease', 'Haemoglobin', 'TOTAL LEUKOCYTES COUNT', 'GLUCOSE', 'UREA', 'RAISED CARDIAC ENZYMES', 'ANAEMIA', 'STABLE ANGINA', 'Acute coronary Syndrome', 'ST ELEVATION MYOCARDIAL INFARCTION', 'ATYPICAL CHEST PAIN', 'Complete Heart Block', 'Sick sinus syndrome', 'ACUTE KIDNEY INJURY', 'Cerebrovascular Accident INFRACT', 'Ventricular Tachycardia', 'PAROXYSMAL SUPRA VENTRICULAR TACHYCARDIA', 'Urinary tract infection', 'NEURO CARDIOGENIC SYNCOPE', 'ORTHOSTATIC', 'INFECTIVE ENDOCARDITIS', 'Deep venous thrombosis', 'SHOCK', 'PULMONARY EMBOLISM', 'CHEST INFECTION', 'AgeGroup']]
