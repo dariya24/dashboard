@@ -332,7 +332,7 @@ elif subpopulation == "Age group":
     'group_4_odds_ratio': '>65 age group',
 }, inplace=True)
 
-variables_to_remove = ["AgeGroup", "boolRural", "boolGender", "ICU_admission_status",'const','Duration_Label']
+variables_to_remove = ["ICU_admission_status",'const','Duration_Label']
 risk_table.drop(labels=variables_to_remove, errors='ignore', inplace=True)
 #risk_table.fillna(0, inplace=True)
 
