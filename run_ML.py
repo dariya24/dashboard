@@ -70,10 +70,13 @@ def get_ICU_ML_Prediction(input_data):
        'CREATININE_Norm']]
 
 
-       filename = 'assets/models/241017_random_forest_ICU.sav'
+       filename = 'assets/models/241022_RF_Model_ICU.sav'
        loaded_model = pickle.load(open(filename, 'rb'))
        result = loaded_model.predict(final)
-       return result[0], final
+
+       result_prob = loaded_model.predict_proba(final)
+
+       return result[0], result_prob[0][1], final
 
 def age_class(age):
     age_group = 1
@@ -145,15 +148,15 @@ def get_duration_label (input_data):
       with open(model_path, 'rb') as file:
        random_forest_model = pickle.load(file)
        result = random_forest_model.predict(final)
-       return result[0], final
+       result_prob = random_forest_model.predict_proba(final)
+
+       return result[0], result_prob[0][1], final
 
            
            
 
 
 def get_SHAP_Plot(row, filename):
-
-
 
 
     model = pickle.load(open(filename, 'rb'))

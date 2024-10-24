@@ -88,6 +88,8 @@ st.markdown(sidebar_bg, unsafe_allow_html=True)
 
 #data preprocessing
 df = pd.read_csv("data/LATEST_241007_post_processed_no_duplicates.csv")
+
+
 age_group_mapping = {
 '<18': 1, '18 - 35': 2,'36 - 65': 3,'>65':4 
 }

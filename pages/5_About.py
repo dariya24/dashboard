@@ -124,5 +124,7 @@ For any inquiries, please contact us via our collective email:
 📧 **medipredict@stud.dsv.su.se**
 """)
 
+
+
 # Optional: Logo
 st.image("assets/PRAIS.png", use_column_width=False, width=500)

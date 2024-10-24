@@ -321,8 +321,10 @@ if st.button("Predict", key="predict_button"):
     st.write("Collected Input Data:")
     st.write(input_data)
 
-    prediction_result_icu, data_icu = get_ICU_ML_Prediction(input_data)
-    prediction_result_duration, data_duration = get_duration_label(input_data)
+    prediction_result_icu, prediction_result_icu_prob, data_icu = get_ICU_ML_Prediction(input_data)
+    prediction_result_duration, prediction_result_duration_prob, data_duration = get_duration_label(input_data)
+
+    print(prediction_result_icu_prob, prediction_result_duration_prob)
 
     #prediction_result_icu = 1
     #prediction_result_duration = 0
@@ -342,8 +344,8 @@ if st.button("Predict", key="predict_button"):
     # Display the predictions
     
     st.subheader("Prediction Results:")
-    st.markdown(f"**Long-term stay (7+ days)**: {prediction_dur}")
-    st.markdown(f"**ICU admission**: {prediction_icu}")
+    st.markdown("**Long-term stay (7+ days)**: {} (probability: {})".format(prediction_dur, round(prediction_result_duration_prob, 2)))
+    st.markdown("**ICU admission**: {} (probability: {})".format(prediction_icu, round(prediction_result_icu_prob, 2)))
 
     # Section 3: Lab Values (Collapsible)
     with st.expander("Expand to see SHAP Interpretation"):
@@ -361,12 +363,12 @@ if st.button("Predict", key="predict_button"):
         st.pyplot(fig1)
 
         st.subheader("SHAP Waterfall plot for ICU Admission Model")
-        icu_model = 'assets/models/241017_random_forest_ICU.sav'
+        icu_model = 'assets/models/241022_RF_Model_ICU.sav'
         fig2 = get_SHAP_Plot(data_icu, icu_model)
         ## Display the plot in Streamlit
         st.pyplot(fig2)
 
-        st.markdown("""*Note that the output of the model in the plot  - f(x) - is not class label 1/0, but a probability of a class being "1".\
+        st.markdown("""*Note that the output of the model in the plot  - f(x) - is not class label 1/0, but a probability of a output being "Yes".\
           This happens, because random forest doesn't directly predict class labels, but outputs the probability of each class.\
           The final predicted class is based on the highest probability.\\
           **Baseline value - E[f(x)] - The average prediction of the model over all instances (without any specific feature contribution).\
