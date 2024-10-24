@@ -1,18 +1,10 @@
 import streamlit as st
-#from styles import apply_custom_css
-#import sys
-#import os
+
 
 st.set_page_config(
     page_title="PRAIS - About",
     page_icon="❤",
 )
-
-# Get the parent directory (where dashboard is located)
-#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-# Custom styles for hovering over tabs
-#st.markdown(apply_custom_css(), unsafe_allow_html=True)
 
 
 # Sidebar background with reduced opacity for image only
@@ -56,7 +48,19 @@ We are a group of health informatics students comprised of passionate data scien
 
 ### Project description and objectives
 
-For our PRAIS project, we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions and our aim is that this would be of use for hospital managers and clinical coordinators within healthcare for optimizing care strategies and improving patient outcomes.
+For our PRAIS project, we are focusing on utilizing predictive analytics to provide insights into long-term hospital stays and ICU admissions. 
+
+Our aim is that this would be of use for hospital managers and clinical coordinators within healthcare for optimizing care strategies and improving patient outcomes in future planning.
+
+For the Descriptive tab, it provides key demographic and clinical data from the patient cohort, such as age distribution, prevalence of underlying conditions (e.g., diabetes, hypertension), and other general trends. These insights could be valuable for clinicians and healthcare administrators to understand patterns in the patient population, identify common risk factors, and assess the burden of disease across different demographics. For instance, new staff members or healthcare researchers might use this data to gain an overview of the typical patient population in their facility, helping them prepare for the kinds of challenges they are likely to face in practice.
+
+The Diagnostic tab provides more targeted insights into specific diagnostic outcomes or indicators, such as the likelihood of patients requiring ICU admission based on specific clinical signs (e.g., elevated cardiac enzymes, abnormal ECG findings). This can be valuable for clinical decision-making, giving physicians and healthcare workers a quick overview of risk profiles based on available diagnostic data even though other factors would also play a role. It could also be of use in research, helping to identify areas where diagnostic protocols or guidelines could be refined based on observed patterns.
+
+Clinicians could also use the Predictive tab as part of their daily work if integrated into the EHR.
+
+### Design process
+            
+We wanted a simple, user-friendly design, with early stakeholder input throughout the process for every iteration. From card-based prototypes and user-testing to the finished product, from early adjustments to final refinements, we bring you our design. 
 
 **References**  
 <a href="https://www.herodmc.com/" target="_blank">Hero DMC Heart Institute Website</a>  
