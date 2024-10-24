@@ -58,6 +58,9 @@ The Diagnostic tab provides more targeted insights into specific diagnostic outc
 
 Clinicians could also use the Predictive tab as part of their daily work if integrated into the EHR.
 
+### Design process
+            
+We wanted a simple, user-friendly design, with early stakeholder input throughout the process for every iteration. From card-based prototypes and user-testing to the finished product, from early adjustments to final refinements, we bring you our design. 
 
 **References**  
 <a href="https://www.herodmc.com/" target="_blank">Hero DMC Heart Institute Website</a>  
