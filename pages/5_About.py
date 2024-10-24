@@ -6,6 +6,43 @@ st.set_page_config(
     page_icon="❤",
 )
 
+# Inject CSS for sidebar links
+custom_css = '''
+/* Reset all possible styles on the sidebar links */
+.st-emotion-cache-xtjyj5.eczjsme14 {
+    color: #f0d7f2 !important;
+    font-weight: bold !important;
+    background-color: #f0d7f2 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+/* Target the active state specifically */
+.st-emotion-cache-xtjyj5.eczjsme14.active {
+    color: #f0d7f2 !important;
+    font-weight: bold !important;
+    background-color: #f0d7f2 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+/* Style for hovered link */
+.st-emotion-cache-xtjyj5.eczjsme14:hover {
+    background-color: #f0d7f2 !important;
+    color: #f0d7f2 !important;
+    font-weight: bold !important;
+    border-radius: 5px; /* Optional: adds rounded corners */
+}
+
+/* Ensure the span within the link inherits these styles */
+.st-emotion-cache-xtjyj5.eczjsme14.active .st-emotion-cache-1rtdyuf.eczjsme13 {
+    color: #f0d7f2 !important;
+    font-weight: bold !important;
+}
+'''
+
+# Apply the CSS
+st.markdown(f"<style>{custom_css}</style>", unsafe_allow_html=True)
 
 # Sidebar background with reduced opacity for image only
 sidebar_bg = '''
