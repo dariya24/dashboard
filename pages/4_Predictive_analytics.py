@@ -4,7 +4,7 @@ from run_ML import get_ICU_ML_Prediction, get_duration_label, get_SHAP_Plot
 
 
 st.set_page_config(
-    page_title="PRAIS - About",
+    page_title="PRAIS - Predictive Analytics",
     page_icon="❤",
 )
 
@@ -131,7 +131,7 @@ sidebar_bg = '''
 
 st.markdown(sidebar_bg, unsafe_allow_html=True)
 
-st.markdown("<h1 style='color: purple;'>Hospital Stay and ICU Admission Prediction</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: purple; margin-left: 0px; margin-top: -15px;'>Hospital Stay and ICU Admission Prediction Tool</h1>", unsafe_allow_html=True)
 
 st.write("**Requirements**: To be able to predict hospital admissions you have to fill in all the fields below. There is no possibility to choose **Not applicable**. ")
 

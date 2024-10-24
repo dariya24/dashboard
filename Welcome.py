@@ -104,7 +104,7 @@ sidebar_bg = '''
 st.markdown(sidebar_bg, unsafe_allow_html=True)
 
 # Main content here
-st.markdown("<h1 style='color: purple;'>PRAIS</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: purple; margin-left: 0px; margin-top: -15px;'>PRAIS</h1>", unsafe_allow_html=True)
 st.write("Welcome to MediPredict's Project PRAIS - Predicting Risk Admissions ICU Stays!")
 st.write("**Why?** Identifying risk factors for, as well as predicting long-term hospital admission and ICU admission can improve future planning of resources. The PRAIS project aims to develop a predictive dashboard providing also descriptive and diagnostic data, using patient data from the Hero DMC Heart Institute, Ludhiana, Punjab, India.")
 st.write("**For whom?** This work is crucial for hospital managers and clinical coordinators within healthcare to optimize care strategies and improve patient outcomes, particularly for patients at high risk of requiring extended hospital stays or ICU admissions.")

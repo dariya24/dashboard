@@ -77,7 +77,7 @@ sidebar_bg = '''
 st.markdown(sidebar_bg, unsafe_allow_html=True)
 
 # About page content
-st.markdown("<h1 style='color: purple;'>About MediPredict</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: purple; margin-left: 0px; margin-top: 15px;'>About this Web Dashboard</h1>", unsafe_allow_html=True)
 
 st.markdown("""
 ## Welcome to MediPredict
